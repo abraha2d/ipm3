@@ -4,6 +4,7 @@ import { Gear, LightRequest, LightStatus } from "./types";
 import canData from "./sampleData";
 
 import "./App.css";
+import "./App.light.css";
 import blank from "./assets/blank.png";
 
 const isLightOn = (left: LightStatus, right: LightStatus) =>
@@ -106,10 +107,18 @@ function App() {
       </div>
       <div className="overlay bottom left">
         <div className="gear-container">
-          <span className={canData.di.gear == Gear.P ? "selected" : ""}>P</span>
-          <span className={canData.di.gear == Gear.R ? "selected" : ""}>R</span>
-          <span className={canData.di.gear == Gear.N ? "selected" : ""}>N</span>
-          <span className={canData.di.gear == Gear.D ? "selected" : ""}>D</span>
+          <span className={canData.di.gear === Gear.P ? "selected" : ""}>
+            P
+          </span>
+          <span className={canData.di.gear === Gear.R ? "selected" : ""}>
+            R
+          </span>
+          <span className={canData.di.gear === Gear.N ? "selected" : ""}>
+            N
+          </span>
+          <span className={canData.di.gear === Gear.D ? "selected" : ""}>
+            D
+          </span>
         </div>
       </div>
       <div className="overlay bottom right">

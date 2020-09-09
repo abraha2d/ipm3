@@ -116,7 +116,7 @@
 
 .gear-container {
   display: flex;
-  color: gray;
+  color: DimGray;
 }
 
 .gear-container > span {
@@ -125,6 +125,7 @@
 
 .gear-container > .selected {
   color: white;
+  font-weight: 500;
 }
 
 .range {
@@ -206,6 +207,6 @@
 
 .speed > .units {
   padding: 5px;
-  color: gray;
+  color: DimGray;
   font-size: 18px;
 }

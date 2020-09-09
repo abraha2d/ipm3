@@ -5,6 +5,7 @@ import {
   BSWState,
   CANData,
   ChargeCableState,
+  ExteriorColor,
   FaultLampStatus,
   FCWState,
   Gear,
@@ -20,6 +21,7 @@ import {
   SCWState,
   SeatbeltBuckleStatus,
   SeatbeltChimeStatus,
+  SunStatus,
   SwitchStatus,
   TrackModeState,
   TractionControlMode,
@@ -27,6 +29,9 @@ import {
 
 export const canData: CANData = {
   airbagLight: false,
+  config: {
+    exteriorColor: ExteriorColor.DEEP_BLUE,
+  },
   das: {
     autoLaneChangeState: ALCState.ALC_SNA,
     autopilotHandsOnState: LCHandsOnState.SNA,
@@ -64,6 +69,7 @@ export const canData: CANData = {
     longitude_deg: 0,
     vehicleHeading_deg: 0,
   },
+  isSunUp: SunStatus.SNA,
   latchStatus: {
     VCFRONT_frunk: LatchStatus.SNA,
     VCLEFT_front: LatchStatus.SNA,

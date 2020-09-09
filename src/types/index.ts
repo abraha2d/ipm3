@@ -1,3 +1,4 @@
+import { ConfigData } from "./config";
 import { DASData } from "./das";
 import { DIData } from "./di";
 import { ESPData } from "./esp";
@@ -9,6 +10,7 @@ import { SeatbeltStatusData } from "./seatbelt";
 import { SwitchStatusData } from "./switch";
 import { TPMSData } from "./tpms";
 
+export * from "./config";
 export * from "./das";
 export * from "./di";
 export * from "./esp";
@@ -20,12 +22,20 @@ export * from "./seatbelt";
 export * from "./switch";
 export * from "./tpms";
 
+export enum SunStatus {
+  DOWN,
+  UP,
+  SNA = 3,
+}
+
 export interface CANData {
   airbagLight: boolean;
+  config: ConfigData;
   das: DASData;
   di: DIData;
   esp: ESPData;
   gps: GPSData;
+  isSunUp: SunStatus;
   latchStatus: LatchStatusData;
   lightStatus: LightStatusData;
   parkBrakeFault: boolean;
