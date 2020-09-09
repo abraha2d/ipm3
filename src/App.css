@@ -1,38 +1,211 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root {
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.App {
+  width: 800px;
+  height: 480px;
+  position: absolute;
+  background: black;
+  color: white;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 24px;
+}
+
+.overlay {
+  position: absolute;
+  padding: 10px;
+}
+
+.overlay.top {
+  top: 0;
+}
+
+.overlay.bottom {
+  bottom: 0;
+}
+
+.overlay.left {
+  left: 0;
+}
+
+.overlay.center {
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay.right {
+  right: 0;
+}
+
+.telltale {
+  background: url("assets/telltale_symbols.png") -300px;
+  width: 50px;
+  height: 50px;
+}
+
+.telltale.mute {
+  background-position: 0;
+}
+
+.telltale.low-beam {
+  background-position: -50px;
+}
+
+.telltale.high-beam {
+  background-position: -100px;
+}
+
+.telltale.park-lights {
+  background-position: -150px;
+}
+
+.telltale.front-fog {
+  background-position: -200px;
+}
+
+.telltale.rear-fog {
+  background-position: -250px;
+}
+
+.telltale.esp {
+  background-position: -350px;
+}
+
+.telltale.trailer-mode {
+  background-position: -400px;
+}
+
+.telltale.air-suspension {
+  background-position: -450px;
+}
+
+.telltale.brake {
+  background-position: -500px;
+}
+
+.telltale.airbag {
+  background-position: -550px;
+}
+
+.telltale.abs {
+  background-position: -600px;
+}
+
+.telltale.parking-brake {
+  background-position: -650px;
+}
+
+.telltale.tpms {
+  background-position: -700px;
+}
+
+.telltale.door-open {
+  background-position: -750px;
+}
+
+.telltale.seatbelt {
+  background-position: -800px;
+}
+
+.gear-container {
+  display: flex;
+  color: gray;
+}
+
+.gear-container > span {
+  padding: 5px;
+}
+
+.gear-container > .selected {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.range {
+  padding: 5px;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.range > .value {
+  padding: 3px 10px;
+  font-size: 18px;
+}
+
+.range > .icon {
+  position: relative;
+  background: url("assets/night/battery_color_bg.png");
+  width: 64px;
+  height: 20px;
+}
+
+.range > .icon > .sprite {
+  position: absolute;
+  background: url("assets/battery_color_sprite.png");
+  width: 60px;
+  height: 20px;
+}
+
+.range > .icon > .sprite.low {
+  background-position: -60px;
+}
+
+.range > .icon > .sprite.very-low {
+  background-position: -120px;
+}
+
+.turn-signal {
+  position: relative;
+  margin: 0 10px;
+  width: 48px;
+  height: 48px;
+}
+
+.turn-signal.active {
+  background: url("assets/turn_indicator_circle_small.png");
+}
+
+.turn-signal.active::after {
+  content: "";
+  display: block;
+
+  position: absolute;
+  top: 4px;
+  left: 4px;
+
+  background: url("assets/turn_indicator_arrow_small.png");
+  width: 40px;
+  height: 40px;
+}
+
+.turn-signal.active.high::after {
+  background-position: -40px;
+}
+
+.turn-signal.right::after {
+  transform: rotate(180deg);
+}
+
+.speed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.speed > .value {
+  width: 125px;
+  text-align: center;
+  font-size: 72px;
+}
+
+.speed > .units {
+  padding: 5px;
+  color: gray;
+  font-size: 18px;
 }
