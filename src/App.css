@@ -210,3 +210,46 @@
   color: DimGray;
   font-size: 18px;
 }
+
+.vehicle {
+  background: url("assets/night/car/drive/body.png");
+  background-size: 100%;
+  width: 150px;
+  height: 143px;
+
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.vehicle::after {
+  content: "";
+  display: block;
+
+  background: url("assets/night/car/drive/body_paint.png");
+  background-size: 100%;
+  width: 150px;
+  height: 143px;
+}
+
+.vehicle.red::after {
+  filter: url(#red);
+}
+
+.vehicle.black::after {
+  filter: brightness(0.5);
+}
+
+.vehicle.silver::after {
+  filter: brightness(1.5);
+}
+
+.vehicle.blue::after {
+  filter: url(#blue);
+}
+
+.vehicle.white::after {
+  filter: brightness(2.5);
+}
