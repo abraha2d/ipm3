@@ -37,6 +37,10 @@ const messages = {
     ESP_espFaultLamp: "esp.espFaultLamp",
     ESP_espLampFlash: "esp.espLampFlash",
   },
+  ID252BMS_powerAvailable: {
+    BMS_maxDischargePower: "power.maxDischarge_kW",
+    BMS_maxRegenPower: "power.maxRegen_kW",
+  },
   ID257UIspeed: {
     UIspeedUnits257: "ui.speedUnits",
     UIspeed_abs257: "ui.speed",
@@ -90,6 +94,10 @@ const messages = {
   ID334UI_powertrainControl: {
     UI_systemPowerLimit: "ui.systemPowerLimit_kW",
   },
+  ID336MaxPowerRating: {
+    DriveRegenRating336: "power.regenRating_kW",
+    DrivePowerRating336: "power.powerRating_kW",
+  },
   ID33AUI_rangeSOC: {
     UI_Range: "ui.range_mi",
     UI_SOC: "ui.SOC_percent",
@@ -102,6 +110,10 @@ const messages = {
     VCFRONT_driverBuckleStatus: "seatbelts.driverBuckle",
     VCFRONT_driverUnbuckled: "seatbelts.driver",
     VCFRONT_passengerUnbuckled: "seatbelts.passenger",
+  },
+  ID3BBUI_power: {
+    UI_powerExpected: "power.powerExpected_kW",
+    UI_powerIdeal: "power.powerIdeal_kW",
   },
   ID3C2VCLEFT_switchStatus: {
     VCLEFT_swcLeftDoublePress: "switches.swcLeftDoublePress",
@@ -161,7 +173,7 @@ const messages = {
 
 Object.entries(messages).forEach(([message, signals]) => {
   Object.entries(signals).forEach(([signal, key]) => {
-    db.messages[message].signals[signal].onUpdate((s) => {
+    db.messages[message].signals[signal].onChange((s) => {
       console.log(key, s.value);
       wss.clients.forEach((client) =>
         client.send(
