@@ -1,0 +1,10 @@
+{
+  "name": "ipm3",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.17.1",
+    "socketcan": "^2.8.0",
+    "ws": "^7.3.1"
+  }
+}
