@@ -12,7 +12,7 @@
 }
 
 .range > .icon {
-  background: url("assets/day/battery_color_bg.png");
+  background: url("../assets/day/battery_color_bg.png");
 }
 
 .speed > .units {

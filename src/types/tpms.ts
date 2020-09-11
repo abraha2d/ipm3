@@ -1,17 +1,17 @@
 export interface TPMSData {
-  HardWarning: boolean;
-  SoftWarning: boolean;
-  OverPressureWarning: boolean;
-  TemperatureWarning: boolean;
-  SystemFault: boolean;
+  hardWarning: boolean;
+  softWarning: boolean;
+  overPressureWarning: boolean;
+  temperatureWarning: boolean;
+  systemFault: boolean;
 
   FLpressure_bar: number;
   FRpressure_bar: number;
   RLpressure_bar: number;
   RRpressure_bar: number;
 
-  FLtemp_degC: number;
-  FRtemp_degC: number;
-  RLtemp_degC: number;
-  RRtemp_degC: number;
+  FLtemp_C: number;
+  FRtemp_C: number;
+  RLtemp_C: number;
+  RRtemp_C: number;
 }

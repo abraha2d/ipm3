@@ -1,0 +1,148 @@
+.vehicle {
+  background: url("../assets/car/drive/body.png");
+  background-size: 100%;
+  width: 150px;
+  height: 143px;
+
+  position: absolute;
+  bottom: 50px;
+  left: 325px;
+}
+
+.vehicle::before {
+  content: "";
+  display: block;
+
+  background: url("../assets/car/drive/body_paint.png");
+  background-size: 100%;
+  height: 143px;
+}
+
+.vehicle > .spoiler {
+  background: url("../assets/car/drive/spoiler.png");
+  background-size: 100%;
+  width: 78px;
+  height: 3px;
+  top: 70px;
+  left: 36px;
+}
+
+/** Colors */
+
+.vehicle.red::before {
+  filter: url(#red);
+}
+
+.vehicle.black::before {
+  filter: brightness(0.5);
+}
+
+.vehicle.silver::before {
+  filter: brightness(1.5);
+}
+
+.vehicle.blue::before {
+  filter: url(#blue);
+}
+
+.vehicle.white::before {
+  filter: brightness(2.5);
+}
+
+/** Lights */
+
+.vehicle > div {
+  position: absolute;
+}
+
+.vehicle > .brake-center {
+  background: url("../assets/car/drive/brake_center.png");
+  background-size: 100%;
+  width: 32px;
+  height: 13px;
+  top: 55px;
+  left: 59px;
+}
+
+.vehicle > .brake-left {
+  background: url("../assets/car/drive/brake_left.png");
+  background-size: 100%;
+  width: 16px;
+  height: 16px;
+  top: 71px;
+  left: 27px;
+}
+
+.vehicle > .brake-right {
+  background: url("../assets/car/drive/brake_right.png");
+  background-size: 100%;
+  width: 16px;
+  height: 16px;
+  top: 71px;
+  left: 107px;
+}
+
+.vehicle > .park-left {
+  background: url("../assets/car/drive/park_left.png");
+  background-size: 100%;
+  width: 30px;
+  height: 18px;
+  top: 70px;
+  left: 24px;
+}
+
+.vehicle > .park-right {
+  background: url("../assets/car/drive/park_right.png");
+  background-size: 100%;
+  width: 30px;
+  height: 18px;
+  top: 70px;
+  left: 96px;
+}
+
+.vehicle > .turn-left {
+  background: url("../assets/car/drive/turn_left.png");
+  background-size: 100%;
+  width: 35px;
+  height: 35px;
+  top: 61px;
+  left: 17px;
+}
+
+.vehicle > .turn-right {
+  background: url("../assets/car/drive/turn_right.png");
+  background-size: 100%;
+  width: 35px;
+  height: 35px;
+  top: 61px;
+  left: 98px;
+}
+
+/** Headlights */
+
+.vehicle > .headlights {
+  background: url("../assets/car/drive/headlights.png");
+  background-size: 100%;
+  width: 318px;
+  height: 81px;
+  top: -42px;
+  left: -84px;
+  mix-blend-mode: hard-light;
+}
+
+.vehicle > .headlights::after {
+  content: "";
+  display: block;
+  height: 81px;
+}
+.vehicle > .headlights.left::after {
+  background: linear-gradient(to right, transparent 35%, gray 65%);
+}
+
+.vehicle > .headlights.right::after {
+  background: linear-gradient(to left, transparent 35%, gray 65%);
+}
+
+.vehicle > .headlights.left.right::after {
+  background: none;
+}

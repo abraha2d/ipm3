@@ -1,30 +1,41 @@
 import React from "react";
 
-import { ExteriorColor, Gear, LightRequest, LightStatus } from "./types";
-import canData from "./sampleData";
+import {
+  CANData,
+  ExteriorColor,
+  FaultLampStatus,
+  Gear,
+  LightRequest,
+  LightStatus,
+  SeatbeltChimeStatus,
+  SeatbeltStatusData,
+  SpoilerType,
+  TPMSData,
+} from "./types";
 
 import "./App.css";
 // import "./App.light.css";
 import blank from "./assets/blank.png";
 
-const isLightOn = (left: LightStatus, right: LightStatus) =>
-  left === LightStatus.ON && right === LightStatus.ON;
+const isLightOn = (l: LightStatus) =>
+  l === LightStatus.ON || l === LightStatus.FAULT;
 
-const isLightOff = (left: LightStatus, right: LightStatus) =>
-  left === LightStatus.OFF && right === LightStatus.OFF;
+const isLightsOff = (left: LightStatus, right: LightStatus) =>
+  (left === LightStatus.OFF && right === LightStatus.OFF) ||
+  (left === LightStatus.SNA && right === LightStatus.SNA);
 
-const isLightFault = (left: LightStatus, right: LightStatus) =>
-  !(isLightOn(left, right) || isLightOff(left, right));
+const isLightsFault = (left: LightStatus, right: LightStatus) =>
+  left !== right || left === LightStatus.FAULT || right === LightStatus.FAULT;
 
-const getLightClass = (l: LightStatus, r: LightStatus, c: string) =>
-  `${!isLightOff(l, r) ? c : ""}${isLightFault(l, r) ? " fault" : ""}`;
+const getLightsClass = (l: LightStatus, r: LightStatus, c: string) =>
+  `${!isLightsOff(l, r) ? c : ""}${isLightsFault(l, r) ? " fault" : ""}`;
 
 const getTurnSignalClass = (l: LightRequest) =>
   l !== LightRequest.OFF
     ? `active ${l === LightRequest.ACTIVE_HIGH ? "high" : "low"}`
     : "";
 
-const getExteriorColorClass = (c: ExteriorColor) => {
+const getColorClass = (c: ExteriorColor) => {
   switch (c) {
     case ExteriorColor.RED_MULTICOAT:
       return "red";
@@ -42,10 +53,42 @@ const getExteriorColorClass = (c: ExteriorColor) => {
   }
 };
 
-function App() {
+const getTPMSClass = (t: TPMSData, c: string) =>
+  `${
+    t.hardWarning ||
+    t.softWarning ||
+    t.overPressureWarning ||
+    t.temperatureWarning ||
+    t.systemFault
+      ? c
+      : ""
+  }${t.systemFault ? " fault" : ""}`;
+
+const isSeatbeltBuckled = (s: SeatbeltStatusData) =>
+  s.secondRowCenter === SeatbeltChimeStatus.NONE ||
+  s.secondRowLeft === SeatbeltChimeStatus.NONE ||
+  s.secondRowRight === SeatbeltChimeStatus.NONE ||
+  s.driver === SeatbeltChimeStatus.NONE ||
+  s.passenger === SeatbeltChimeStatus.NONE;
+
+const isSeatbeltFault = (s: SeatbeltStatusData) =>
+  s.secondRowCenter === SeatbeltChimeStatus.SNA ||
+  s.secondRowLeft === SeatbeltChimeStatus.SNA ||
+  s.secondRowRight === SeatbeltChimeStatus.SNA ||
+  s.driver === SeatbeltChimeStatus.SNA ||
+  s.passenger === SeatbeltChimeStatus.SNA;
+
+const getSeatbeltClass = (s: SeatbeltStatusData, c: string) =>
+  `${!isSeatbeltBuckled(s) ? c : ""}${isSeatbeltFault(s) ? " fault" : ""}`;
+
+type AppProps = {
+  canData: CANData;
+};
+
+function App({ canData }: AppProps) {
   return (
     <div className="App">
-      <svg height="0px" width="0px">
+      <svg height="0" width="0">
         <defs>
           <filter id="red" colorInterpolationFilters="sRGB">
             <feColorMatrix
@@ -61,78 +104,101 @@ function App() {
           </filter>
         </defs>
       </svg>
-      <div className="overlay top left">
-        <div className="telltale-container">
-          <img
-            src={blank}
-            className={`telltale ${getLightClass(
-              canData.lightStatus.VCFRONT_fogLeft,
-              canData.lightStatus.VCFRONT_fogRight,
-              "front-fog"
-            )}`}
-            alt=""
-          />
-          <img
-            src={blank}
-            className={`telltale ${getLightClass(
-              canData.lightStatus.VCRIGHT_rearFog,
-              canData.lightStatus.VCRIGHT_rearFog,
-              "rear-fog"
-            )}`}
-            alt=""
-          />
-          <img
-            src={blank}
-            className={`telltale ${true ? "tpms" : "empty"}`}
-            alt=""
-          />
-          <img
-            src={blank}
-            className={`telltale ${true ? "seatbelt" : "empty"}`}
-            alt=""
-          />
-          <img
-            src={blank}
-            className={`telltale ${true ? "airbag" : "empty"}`}
-            alt=""
-          />
+      <div className="overlay top center">
+        <div
+          className={`turn-signal ${getTurnSignalClass(
+            canData.lights.indicatorLeftRequest
+          )} left`}
+        />
+        <div className="speed">
+          <span className="value">{Math.round(canData.ui.speed)}</span>
+          <span className="units">
+            {canData.ui.speedUnits ? "KM/H" : "MPH"}
+          </span>
         </div>
+        <div
+          className={`turn-signal ${getTurnSignalClass(
+            canData.lights.indicatorRightRequest
+          )} right`}
+        />
+      </div>
+      <div className="overlay top left">
+        <img
+          src={blank}
+          className={`telltale ${getLightsClass(
+            canData.lights.fogLeft,
+            canData.lights.fogRight,
+            "front-fog"
+          )}`}
+          alt=""
+        />
+        <img
+          src={blank}
+          className={`telltale ${getLightsClass(
+            canData.lights.rearFog,
+            canData.lights.rearFog,
+            "rear-fog"
+          )}`}
+          alt=""
+        />
+        <img
+          src={blank}
+          className={`telltale ${getTPMSClass(canData.tpms, "tpms")}`}
+          alt=""
+        />
+        <img
+          src={blank}
+          className={`telltale ${getSeatbeltClass(
+            canData.seatbelts,
+            "seatbelt"
+          )}`}
+          alt=""
+        />
+        <img
+          src={blank}
+          className={`telltale ${canData.airbagLight ? "airbag" : ""}`}
+          alt=""
+        />
       </div>
       <div className="overlay top right">
         <div className="telltale-container">
           <img
             src={blank}
-            className={`telltale ${true ? "abs" : "empty"}`}
+            className={`telltale ${
+              canData.esp.absFaultLamp === FaultLampStatus.ON ? "abs" : ""
+            }`}
             alt=""
           />
           <img
             src={blank}
-            className={`telltale ${true ? "esp" : "empty"}`}
+            className={`telltale ${canData.esp.espFaultLamp ? "esp" : ""} ${
+              canData.esp.espLampFlash ? "fault" : ""
+            }`}
             alt=""
           />
           <img
             src={blank}
-            className={`telltale ${getLightClass(
-              canData.lightStatus.VCFRONT_parkLeft,
-              canData.lightStatus.VCFRONT_parkRight,
+            className={`telltale ${getLightsClass(
+              canData.lights.parkLeft,
+              canData.lights.parkRight,
               "park-lights"
             )}`}
             alt=""
           />
           <img
             src={blank}
-            className={`telltale ${getLightClass(
-              canData.lightStatus.VCFRONT_highBeamLeft,
-              canData.lightStatus.VCFRONT_highBeamRight,
+            className={`telltale ${getLightsClass(
+              canData.lights.highBeamLeft,
+              canData.lights.highBeamRight,
               "high-beam"
             )}`}
             alt=""
           />
           <img
             src={blank}
-            className={`telltale ${getLightClass(
-              canData.lightStatus.VCFRONT_lowBeamLeft,
-              canData.lightStatus.VCFRONT_lowBeamRight,
+            className={`telltale ${getLightsClass(
+              canData.lights.lowBeamLeft,
+              canData.lights.lowBeamRight,
               "low-beam"
             )}`}
             alt=""
@@ -140,7 +206,11 @@ function App() {
         </div>
       </div>
       <div className="overlay bottom left">
-        <div className="gear-container">
+        <div
+          className={`gear-container ${
+            canData.di.gear === Gear.INVALID ? "fault" : ""
+          }`}
+        >
           <span className={canData.di.gear === Gear.P ? "selected" : ""}>
             P
           </span>
@@ -157,44 +227,55 @@ function App() {
       </div>
       <div className="overlay bottom right">
         <div className="range">
-          <span className="value">{canData.power.range_mi} mi</span>
+          <span className="value">{canData.ui.range_mi} mi</span>
           <div className="icon">
             <img
               src={blank}
-              className={`sprite ${
-                canData.power.SOC_percent < 10 ? "very-" : ""
-              }${canData.power.SOC_percent < 20 ? "low" : ""}`}
-              style={{ width: (60 * canData.power.SOC_percent) / 100 }}
+              className={`sprite ${canData.ui.SOC_percent < 10 ? "very-" : ""}${
+                canData.ui.SOC_percent < 20 ? "low" : ""
+              }`}
+              style={{ width: (60 * canData.ui.SOC_percent) / 100 }}
               alt=""
             />
           </div>
         </div>
       </div>
-      <div className="overlay top center">
+      <div className={`vehicle ${getColorClass(canData.gtw.exteriorColor)}`}>
+        {canData.lights.leftBrake === LightStatus.ON &&
+          canData.lights.rightBrake === LightStatus.ON && (
+            <div className="brake-center" />
+          )}
+        {canData.lights.leftBrake === LightStatus.ON && (
+          <div className="brake-left" />
+        )}
+        {canData.lights.rightBrake === LightStatus.ON && (
+          <div className="brake-right" />
+        )}
         <div
-          className={`turn-signal ${getTurnSignalClass(
-            canData.lightStatus.VCFRONT_indicatorRight
-          )} left`}
+          className={`${getLightsClass(
+            canData.lights.lowBeamLeft,
+            canData.lights.lowBeamRight,
+            "headlights"
+          )}${isLightOn(canData.lights.lowBeamLeft) ? " left" : ""}${
+            isLightOn(canData.lights.lowBeamRight) ? " right" : ""
+          }`}
         />
-        <div className="speed">
-          <span className="value">
-            {canData.esp.vehicleSpeed_kph === 1023
-              ? "N/A"
-              : Math.round(canData.esp.vehicleSpeed_kph / 1.609)}
-          </span>
-          <span className="units">MPH</span>
-        </div>
-        <div
-          className={`turn-signal ${getTurnSignalClass(
-            canData.lightStatus.VCFRONT_indicatorRight
-          )} right`}
-        />
+        {canData.lights.leftTail === LightStatus.ON && (
+          <div className="park-left" />
+        )}
+        {canData.lights.rightTail === LightStatus.ON && (
+          <div className="park-right" />
+        )}
+        {canData.gtw.spoilerType === SpoilerType.PASSIVE && (
+          <div className="spoiler" />
+        )}
+        {canData.lights.rearLeftTurnSignal === LightStatus.ON && (
+          <div className="turn-left" />
+        )}
+        {canData.lights.rearRightTurnSignal === LightStatus.ON && (
+          <div className="turn-right" />
+        )}
       </div>
-      <div
-        className={`vehicle ${getExteriorColorClass(
-          canData.config.exteriorColor
-        )}`}
-      />
     </div>
   );
 }

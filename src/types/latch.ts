@@ -11,10 +11,10 @@ export enum LatchStatus {
 }
 
 export interface LatchStatusData {
-  VCFRONT_frunk: LatchStatus;
-  VCLEFT_front: LatchStatus;
-  VCLEFT_rear: LatchStatus;
-  VCRIGHT_front: LatchStatus;
-  VCRIGHT_rear: LatchStatus;
-  VCRIGHT_trunk: LatchStatus;
+  frunk: LatchStatus;
+  frontLeft: LatchStatus;
+  rearLeft: LatchStatus;
+  frontRight: LatchStatus;
+  rearRight: LatchStatus;
+  trunk: LatchStatus;
 }

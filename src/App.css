@@ -1,3 +1,29 @@
+@import url("css/telltale.css");
+@import url("css/vehicle.css");
+
+@keyframes fault {
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.33;
+  }
+  99% {
+    opacity: 0.33;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fault {
+  animation: fault 500ms;
+  animation-iteration-count: 10;
+}
+
 #root {
   width: 100vw;
   height: 100vh;
@@ -42,76 +68,6 @@
 
 .overlay.right {
   right: 0;
-}
-
-.telltale {
-  background: url("assets/telltale_symbols.png") -300px;
-  width: 50px;
-  height: 50px;
-}
-
-.telltale.mute {
-  background-position: 0;
-}
-
-.telltale.low-beam {
-  background-position: -50px;
-}
-
-.telltale.high-beam {
-  background-position: -100px;
-}
-
-.telltale.park-lights {
-  background-position: -150px;
-}
-
-.telltale.front-fog {
-  background-position: -200px;
-}
-
-.telltale.rear-fog {
-  background-position: -250px;
-}
-
-.telltale.esp {
-  background-position: -350px;
-}
-
-.telltale.trailer-mode {
-  background-position: -400px;
-}
-
-.telltale.air-suspension {
-  background-position: -450px;
-}
-
-.telltale.brake {
-  background-position: -500px;
-}
-
-.telltale.airbag {
-  background-position: -550px;
-}
-
-.telltale.abs {
-  background-position: -600px;
-}
-
-.telltale.parking-brake {
-  background-position: -650px;
-}
-
-.telltale.tpms {
-  background-position: -700px;
-}
-
-.telltale.door-open {
-  background-position: -750px;
-}
-
-.telltale.seatbelt {
-  background-position: -800px;
 }
 
 .gear-container {
@@ -209,47 +165,4 @@
   padding: 5px;
   color: DimGray;
   font-size: 18px;
-}
-
-.vehicle {
-  background: url("assets/night/car/drive/body.png");
-  background-size: 100%;
-  width: 150px;
-  height: 143px;
-
-  position: absolute;
-  bottom: 50px;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-
-.vehicle::after {
-  content: "";
-  display: block;
-
-  background: url("assets/night/car/drive/body_paint.png");
-  background-size: 100%;
-  width: 150px;
-  height: 143px;
-}
-
-.vehicle.red::after {
-  filter: url(#red);
-}
-
-.vehicle.black::after {
-  filter: brightness(0.5);
-}
-
-.vehicle.silver::after {
-  filter: brightness(1.5);
-}
-
-.vehicle.blue::after {
-  filter: url(#blue);
-}
-
-.vehicle.white::after {
-  filter: brightness(2.5);
 }

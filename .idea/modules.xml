@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ipm3.iml" filepath="$PROJECT_DIR$/.idea/ipm3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ipm3-backend/.idea/ipm3-backend.iml" filepath="$PROJECT_DIR$/../ipm3-backend/.idea/ipm3-backend.iml" />
     </modules>
   </component>
 </project>

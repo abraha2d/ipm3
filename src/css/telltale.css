@@ -1,0 +1,68 @@
+.telltale {
+  background: url("../assets/telltale_symbols.png") -300px;
+  height: 50px;
+}
+
+.telltale.mute {
+  background-position: 0;
+}
+
+.telltale.low-beam {
+  background-position: -50px;
+}
+
+.telltale.high-beam {
+  background-position: -100px;
+}
+
+.telltale.park-lights {
+  background-position: -150px;
+}
+
+.telltale.front-fog {
+  background-position: -200px;
+}
+
+.telltale.rear-fog {
+  background-position: -250px;
+}
+
+.telltale.esp {
+  background-position: -350px;
+}
+
+.telltale.trailer-mode {
+  background-position: -400px;
+}
+
+.telltale.air-suspension {
+  background-position: -450px;
+}
+
+.telltale.brake {
+  background-position: -500px;
+}
+
+.telltale.airbag {
+  background-position: -550px;
+}
+
+.telltale.abs {
+  background-position: -600px;
+}
+
+.telltale.parking-brake {
+  background-position: -650px;
+}
+
+.telltale.tpms {
+  background-position: -700px;
+}
+
+.telltale.door-open {
+  background-position: -750px;
+}
+
+.telltale.seatbelt {
+  background-position: -800px;
+}

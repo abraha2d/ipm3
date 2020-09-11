@@ -7,6 +7,12 @@ export enum ExteriorColor {
   PEARL_WHITE,
 }
 
-export interface ConfigData {
+export enum SpoilerType {
+  NOT_INSTALLED,
+  PASSIVE,
+}
+
+export interface GTWData {
   exteriorColor: ExteriorColor;
+  spoilerType: SpoilerType;
 }

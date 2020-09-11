@@ -1,15 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { get, set } from "lodash";
+
 import App from "./App";
+import canData from "./sampleData";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+import "./index.css";
+
+const webSocket = new WebSocket("ws://localhost:3001");
+webSocket.onmessage = (event) => {
+  const dj = JSON.parse(event.data);
+  if (get(canData, dj.key) === undefined) {
+    console.error("ERROR:", dj.key, "did not exist!");
+  }
+  set(canData, dj.key, dj.val);
+  ReactDOM.render(
+    <React.StrictMode>
+      <App canData={canData} />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+};
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
