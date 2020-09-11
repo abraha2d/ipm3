@@ -1,4 +1,5 @@
 import React from "react";
+import * as d3 from "d3";
 
 import {
   CANData,
@@ -14,7 +15,7 @@ import {
 } from "./types";
 
 import "./App.css";
-import "./css/daytime.css";
+// import "./css/daytime.css";
 import blank from "./assets/blank.png";
 
 const isLightOn = (l: LightStatus) =>
@@ -225,17 +226,17 @@ function App({ canData }: AppProps) {
           </span>
         </div>
         <div className="ambient-temperature C">
-          {canData.sensors.tempAmbientFiltered_C}
+          {Math.round(canData.sensors.tempAmbientFiltered_C)}
         </div>
       </div>
       <div className="overlay bottom right">
         <div
           className={`current-time ${
-            new Date(canData.unixTime_s).getHours() > 12 ? "pm" : "am"
+            new Date(canData.unixTime_s * 1000).getHours() > 12 ? "pm" : "am"
           }`}
         >
           {
-            new Date(canData.unixTime_s)
+            new Date(canData.unixTime_s * 1000)
               .toLocaleTimeString("en-US", {
                 hour: "numeric",
                 minute: "numeric",
@@ -292,6 +293,57 @@ function App({ canData }: AppProps) {
         {canData.lights.rearRightTurnSignal === LightStatus.ON && (
           <div className="turn-right" />
         )}
+      </div>
+      <div className="regen-gauge">
+        <svg width={250} height={250}>
+          <g transform="translate(125, 125)">
+            <path
+              className="power-line"
+              d={
+                d3.arc()({
+                  innerRadius: 100,
+                  outerRadius: 101,
+                  startAngle: (-90 * Math.PI) / 180,
+                  endAngle: (45 * Math.PI) / 180,
+                }) as any
+              }
+            />
+            <path
+              className="regen-line"
+              d={
+                d3.arc()({
+                  innerRadius: 100,
+                  outerRadius: 101,
+                  startAngle: (-90 * Math.PI) / 180,
+                  endAngle: (-135 * Math.PI) / 180,
+                }) as any
+              }
+            />
+            <path
+              className={`actual-line ${
+                canData.power.rear_kW + canData.power.front_kW < 0
+                  ? "regen"
+                  : ""
+              }`}
+              d={
+                d3.arc()({
+                  innerRadius: 95,
+                  outerRadius: 100,
+                  startAngle: (-90 * Math.PI) / 180,
+                  endAngle:
+                    ((-90 +
+                      (canData.power.rear_kW + canData.power.front_kW) / 3) *
+                      Math.PI) /
+                    180,
+                }) as any
+              }
+            />
+            <text className="value">
+              {Math.round(canData.power.rear_kW + canData.power.front_kW)}
+            </text>
+            <text className="units">kW</text>
+          </g>
+        </svg>
       </div>
     </div>
   );

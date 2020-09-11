@@ -15,6 +15,11 @@
   background: url("../assets/day/battery_color_bg.png");
 }
 
+.regen-gauge .power-line,
+.regen-gauge .regen-line {
+  fill: DarkGray;
+}
+
 .speed > .units {
   color: DarkGray;
 }

@@ -19,7 +19,7 @@ const webSocket = new WebSocket("ws://localhost:3001");
 webSocket.onmessage = (event) => {
   const dj = JSON.parse(event.data);
   if (get(canData, dj.key) === undefined) {
-    console.error("ERROR:", dj.key, "did not exist!");
+    console.error("Unknown key:", dj.key, "(value", dj.val, ")");
   }
   set(canData, dj.key, dj.val);
   ReactDOM.render(
