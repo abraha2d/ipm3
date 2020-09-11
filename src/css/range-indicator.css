@@ -1,0 +1,36 @@
+.range {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.range > .value {
+  padding: 3px 10px;
+}
+
+.range.mi > .value::after {
+  content: " mi";
+  font-size: 18px;
+}
+
+.range > .icon {
+  position: relative;
+  background: url("../assets/night/battery_color_bg.png");
+  width: 64px;
+  height: 20px;
+}
+
+.range > .icon > .sprite {
+  position: absolute;
+  background: url("../assets/battery_color_sprite.png");
+  width: 60px;
+  height: 20px;
+}
+
+.range > .icon > .sprite.low {
+  background-position: -60px;
+}
+
+.range > .icon > .sprite.very-low {
+  background-position: -120px;
+}

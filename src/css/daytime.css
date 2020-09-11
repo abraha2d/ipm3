@@ -3,11 +3,11 @@
   color: DimGray;
 }
 
-.gear-container {
+.gear-indicator {
   color: DarkGray;
 }
 
-.gear-container > .selected {
+.gear-indicator > .selected {
   color: DimGray;
 }
 

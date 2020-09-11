@@ -1,0 +1,13 @@
+.gear-indicator {
+  display: flex;
+  color: DimGray;
+}
+
+.gear-indicator > span {
+  padding: 5px;
+}
+
+.gear-indicator > .selected {
+  color: white;
+  font-weight: 500;
+}

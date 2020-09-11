@@ -1,5 +1,30 @@
-@import url("css/telltale.css");
-@import url("css/vehicle.css");
+@import "css/ambient-temperature.css";
+@import "css/current-time.css";
+@import "css/gear-indicator.css";
+@import "css/overlays.css";
+@import "css/range-indicator.css";
+@import "css/speedometer.css";
+@import "css/telltale-indicators.css";
+@import "css/turn-signals.css";
+@import "css/vehicle.css";
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App {
+  width: 800px;
+  height: 480px;
+  position: absolute;
+  background: black;
+  color: white;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 24px;
+}
 
 @keyframes fault {
   0% {
@@ -22,147 +47,4 @@
 .fault {
   animation: fault 500ms;
   animation-iteration-count: 10;
-}
-
-#root {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.App {
-  width: 800px;
-  height: 480px;
-  position: absolute;
-  background: black;
-  color: white;
-  font-family: "Ubuntu", sans-serif;
-  font-size: 24px;
-}
-
-.overlay {
-  position: absolute;
-  padding: 10px;
-}
-
-.overlay.top {
-  top: 0;
-}
-
-.overlay.bottom {
-  bottom: 0;
-}
-
-.overlay.left {
-  left: 0;
-}
-
-.overlay.center {
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.overlay.right {
-  right: 0;
-}
-
-.gear-container {
-  display: flex;
-  color: DimGray;
-}
-
-.gear-container > span {
-  padding: 5px;
-}
-
-.gear-container > .selected {
-  color: white;
-  font-weight: 500;
-}
-
-.range {
-  padding: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.range > .value {
-  padding: 3px 10px;
-  font-size: 18px;
-}
-
-.range > .icon {
-  position: relative;
-  background: url("assets/night/battery_color_bg.png");
-  width: 64px;
-  height: 20px;
-}
-
-.range > .icon > .sprite {
-  position: absolute;
-  background: url("assets/battery_color_sprite.png");
-  width: 60px;
-  height: 20px;
-}
-
-.range > .icon > .sprite.low {
-  background-position: -60px;
-}
-
-.range > .icon > .sprite.very-low {
-  background-position: -120px;
-}
-
-.turn-signal {
-  position: relative;
-  margin: 0 10px;
-  width: 48px;
-  height: 48px;
-}
-
-.turn-signal.active {
-  background: url("assets/turn_indicator_circle_small.png");
-}
-
-.turn-signal.active::after {
-  content: "";
-  display: block;
-
-  position: absolute;
-  top: 4px;
-  left: 4px;
-
-  background: url("assets/turn_indicator_arrow_small.png");
-  width: 40px;
-  height: 40px;
-}
-
-.turn-signal.active.high::after {
-  background-position: -40px;
-}
-
-.turn-signal.right::after {
-  transform: rotate(180deg);
-}
-
-.speed {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.speed > .value {
-  width: 125px;
-  text-align: center;
-  font-size: 72px;
-}
-
-.speed > .units {
-  padding: 5px;
-  color: DimGray;
-  font-size: 18px;
 }

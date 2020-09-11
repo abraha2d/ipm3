@@ -1,0 +1,31 @@
+.overlay {
+  position: absolute;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.overlay.top {
+  top: 0;
+}
+
+.overlay.bottom {
+  bottom: 0;
+  width: 250px;
+}
+
+.overlay.left {
+  left: 0;
+}
+
+.overlay.center {
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay.right {
+  right: 0;
+}

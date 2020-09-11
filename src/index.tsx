@@ -8,6 +8,13 @@ import * as serviceWorker from "./serviceWorker";
 
 import "./index.css";
 
+ReactDOM.render(
+  <React.StrictMode>
+    <App canData={canData} />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
+
 const webSocket = new WebSocket("ws://localhost:3001");
 webSocket.onmessage = (event) => {
   const dj = JSON.parse(event.data);
