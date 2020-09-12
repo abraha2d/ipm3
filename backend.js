@@ -104,12 +104,12 @@ const messages = {
     UI_ratedWHpM: "ui.ratedWHpM",
   },
   ID3A1VCFRONT_vehicleStatus: {
-    VCFRONT_2RowCenterUnbuckled: "seatbelts.secondRowCenter",
-    VCFRONT_2RowLeftUnbuckled: "seatbelts.secondRowLeft",
-    VCFRONT_2RowRightUnbuckled: "seatbelts.secondRowRight",
-    VCFRONT_driverBuckleStatus: "seatbelts.driverBuckle",
-    VCFRONT_driverUnbuckled: "seatbelts.driver",
-    VCFRONT_passengerUnbuckled: "seatbelts.passenger",
+    VCFRONT_2RowCenterUnbuckled: "seatbelt.secondRowCenter",
+    VCFRONT_2RowLeftUnbuckled: "seatbelt.secondRowLeft",
+    VCFRONT_2RowRightUnbuckled: "seatbelt.secondRowRight",
+    VCFRONT_driverBuckleStatus: "seatbelt.driverBuckle",
+    VCFRONT_driverUnbuckled: "seatbelt.driver",
+    VCFRONT_passengerUnbuckled: "seatbelt.passenger",
   },
   ID3C2VCLEFT_switchStatus: {
     VCLEFT_swcLeftDoublePress: "switches.swcLeftDoublePress",
