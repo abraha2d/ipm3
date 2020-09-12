@@ -1,14 +1,41 @@
-const socketcan = require("socketcan");
-
 const express = require("express");
 const http = require("http");
+const socketcan = require("socketcan");
 const ws = require("ws");
 
 const network = socketcan.parseNetworkDescription("Model3CAN.kcd");
 const channel = socketcan.createRawChannel("can0");
 const db = new socketcan.DatabaseService(channel, network.buses["Model3CAN"]);
 
+const messagesChassis = {
+  ID145ESP_status: {
+    ESP_absFaultLamp: "esp.absFaultLamp",
+    ESP_ebdFaultLamp: "esp.ebdFaultLamp",
+    ESP_espFaultLamp: "esp.espFaultLamp",
+    ESP_espLampFlash: "esp.espLampFlash",
+  },
+  ID31FTPMSsensors: {
+    TPMSFLpressure31F: "tpms.FLpressure_bar",
+    TPMSFRpressure31F: "tpms.FRpressure_bar",
+    TPMSRLpressure31F: "tpms.RLpressure_bar",
+    TPMSRRpressure31F: "tpms.RRpressure_bar",
+    TPMSFLtemp31F: "tpms.FLtemp_C",
+    TPMSFRtemp31F: "tpms.FRtemp_C",
+    TPMSRLtemp31F: "tpms.RLtemp_C",
+    TPMSRRtemp31F: "tpms.RRtemp_C",
+  },
+  ID336MaxPowerRating: {
+    DriveRegenRating336: "power.regenRating_kW",
+    DrivePowerRating336: "power.powerRating_kW",
+  },
+};
+
 const messages = {
+  ID04FGPSLatLong: {
+    GPSAccuracy04F: "gps.accuracy_m",
+    GPSLongitude04F: "gps.longitude_m",
+    GPSLatitude04F: "gps.latitude_m",
+  },
   ID102VCLEFT_doorStatus: {
     VCLEFT_frontLatchStatus: "latches.frontLeft",
     VCLEFT_rearLatchStatus: "latches.rearLeft",
@@ -31,12 +58,6 @@ const messages = {
     UI_a017_TPMSSystemFault: "tpms.systemFault",
     UI_a019_ParkBrakeFault: "ui.parkBrakeFault",
   },
-  ID145ESP_status: {
-    ESP_absFaultLamp: "esp.absFaultLamp",
-    ESP_ebdFaultLamp: "esp.ebdFaultLamp",
-    ESP_espFaultLamp: "esp.espFaultLamp",
-    ESP_espLampFlash: "esp.espLampFlash",
-  },
   ID252BMS_powerAvailable: {
     BMS_maxDischargePower: "power.maxDischarge_kW",
     BMS_maxRegenPower: "power.maxRegen_kW",
@@ -46,25 +67,18 @@ const messages = {
     UIspeed_abs257: "ui.speed",
   },
   ID25DCP_status: {
-    CP_chargeCableState: "chargePort.chargeCableState",
-    CP_chargeDoorOpen: "chargePort.chargeDoorOpen",
+    CP_chargeCableState: "cp.chargeCableState",
+    CP_chargeDoorOpen: "cp.chargeDoorOpen",
   },
   ID266RearInverterPower: {
     RearPowerLimit266: "power.rearLimit_kW",
-    RearHeatPower266: "power.rearHeat_kW",
     RearPower266: "power.rear_kW",
   },
-  ID268SystemPower: {
-    SystemRegenPowerMax268: "power.systemRegenMax_kW",
-    SystemHeatPowerMax268: "power.systemHeatMax_kW",
-    SystemHeatPower268: "power.systemHeat_kW",
-    SystemDrivePowerMax268: "power.systemDriveMax_kW",
-  },
   ID2B6DI_chassisControlStatus: {
-    DI_tcTelltaleOn: "di.tcTelltaleOn",
     DI_tcTelltaleFlash: "di.tcTelltaleFlash",
-    DI_vdcTelltaleOn: "di.vdcTelltaleOn",
+    DI_tcTelltaleOn: "di.tcTelltaleOn",
     DI_vdcTelltaleFlash: "di.vdcTelltaleFlash",
+    DI_vdcTelltaleOn: "di.vdcTelltaleOn",
     DI_vehicleHoldTelltaleOn: "di.vehicleHoldTelltaleOn",
   },
   ID2D3UI_solarData: {
@@ -76,27 +90,9 @@ const messages = {
   ID2E5FrontInverterPower: {
     FrontPower2E5: "power.front_kW",
     FrontPowerLimit2E5: "power.frontLimit_kW",
-    FrontHeatPower2E5: "power.frontHeat_kW",
-  },
-  ID31FTPMSsensors: {
-    TPMSFLpressure31F: "tpms.FLpressure_bar",
-    TPMSFRpressure31F: "tpms.FRpressure_bar",
-    TPMSRLpressure31F: "tpms.RLpressure_bar",
-    TPMSRRpressure31F: "tpms.RRpressure_bar",
-    TPMSFLtemp31F: "tpms.FLtemp_C",
-    TPMSFRtemp31F: "tpms.FRtemp_C",
-    TPMSRLtemp31F: "tpms.RLtemp_C",
-    TPMSRRtemp31F: "tpms.RRtemp_C",
   },
   ID321VCFRONT_sensors: {
     VCFRONT_tempAmbientFiltered: "sensors.tempAmbientFiltered_C",
-  },
-  ID334UI_powertrainControl: {
-    UI_systemPowerLimit: "ui.systemPowerLimit_kW",
-  },
-  ID336MaxPowerRating: {
-    DriveRegenRating336: "power.regenRating_kW",
-    DrivePowerRating336: "power.powerRating_kW",
   },
   ID33AUI_rangeSOC: {
     UI_Range: "ui.range_mi",
@@ -110,10 +106,6 @@ const messages = {
     VCFRONT_driverBuckleStatus: "seatbelts.driverBuckle",
     VCFRONT_driverUnbuckled: "seatbelts.driver",
     VCFRONT_passengerUnbuckled: "seatbelts.passenger",
-  },
-  ID3BBUI_power: {
-    UI_powerExpected: "power.powerExpected_kW",
-    UI_powerIdeal: "power.powerIdeal_kW",
   },
   ID3C2VCLEFT_switchStatus: {
     VCLEFT_swcLeftDoublePress: "switches.swcLeftDoublePress",
@@ -143,6 +135,9 @@ const messages = {
     VCRIGHT_tailLightStatus: "lights.rightTail",
     VCRIGHT_turnSignalStatus: "lights.rearRightTurnSignal",
   },
+  ID3F3UI_odo: {
+    UI_odometer: "ui.odometer",
+  },
   ID3F5VCFRONT_lighting: {
     VCFRONT_DRLLeftStatus: "lights.DRLLeft",
     VCFRONT_DRLRightStatus: "lights.DRLRight",
@@ -171,10 +166,28 @@ const messages = {
   },
 };
 
+const msgCache = {};
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("IPM3: An instrument panel for the Tesla Model 3.");
+});
+
+const server = http.createServer(app);
+const wss = new ws.Server({ server });
+
+wss.on("connection", (client) => {
+  Object.entries(msgCache).forEach(([key, val]) => {
+    client.send(JSON.stringify({ key, val }));
+  });
+});
+
 Object.entries(messages).forEach(([message, signals]) => {
   Object.entries(signals).forEach(([signal, key]) => {
     db.messages[message].signals[signal].onChange((s) => {
-      console.log(key, s.value);
+      console.log(Date.now() / 1000, key, s.value);
+      msgCache[key] = s.value;
       wss.clients.forEach((client) =>
         client.send(
           JSON.stringify({
@@ -188,17 +201,6 @@ Object.entries(messages).forEach(([message, signals]) => {
 });
 
 channel.start();
-
-const app = express();
-
-app.get("/", (req, res) => {
-  res.send("IPM3: An instrument panel for the Tesla Model 3.");
-});
-
-const server = http.createServer(app);
-const wss = new ws.Server({ server });
-
-// wss.on("connection", (ws) => ws.send("IPM3"));
 
 server.listen(process.env.PORT || 3001, () => {
   console.log(
