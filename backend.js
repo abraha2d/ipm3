@@ -33,8 +33,8 @@ const messagesChassis = {
 const messages = {
   ID04FGPSLatLong: {
     GPSAccuracy04F: "gps.accuracy_m",
-    GPSLongitude04F: "gps.longitude_m",
-    GPSLatitude04F: "gps.latitude_m",
+    GPSLongitude04F: "gps.longitude_deg",
+    GPSLatitude04F: "gps.latitude_deg",
   },
   ID102VCLEFT_doorStatus: {
     VCLEFT_frontLatchStatus: "latches.frontLeft",
