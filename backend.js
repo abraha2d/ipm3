@@ -58,6 +58,10 @@ const messages = {
     UI_a017_TPMSSystemFault: "tpms.systemFault",
     UI_a019_ParkBrakeFault: "ui.parkBrakeFault",
   },
+  ID229GearLever: {
+    GearLeverPosition229: "switches.gearLeverPosition",
+    GearLeverButton229: "switches.gearLeverButton",
+  },
   ID252BMS_powerAvailable: {
     BMS_maxDischargePower: "power.maxDischarge_kW",
     BMS_maxRegenPower: "power.maxRegen_kW",
@@ -120,7 +124,7 @@ const messages = {
     VCLEFT_swcRightTiltRight: "switches.swcRightTiltRight",
   },
   ID3D9UI_gpsVehicleSpeed: {
-    UI_gpsVehicleHeading: "gps.vehicleHeading",
+    UI_gpsVehicleHeading: "gps.vehicleHeading_deg",
   },
   ID3E2VCLEFT_lightStatus: {
     VCLEFT_brakeLightStatus: "lights.leftBrake",
@@ -183,20 +187,26 @@ wss.on("connection", (client) => {
   });
 });
 
+const broadcastMessage = (key, val) => {
+  wss.clients.forEach((client) =>
+    client.send(
+      JSON.stringify({
+        key,
+        val,
+      })
+    )
+  );
+};
+
+const onChangeListener = (key) => (s) => {
+  console.log(Date.now() / 1000, key, s.value);
+  msgCache[key] = s.value;
+  broadcastMessage(key, s.value);
+};
+
 Object.entries(messages).forEach(([message, signals]) => {
   Object.entries(signals).forEach(([signal, key]) => {
-    db.messages[message].signals[signal].onChange((s) => {
-      console.log(Date.now() / 1000, key, s.value);
-      msgCache[key] = s.value;
-      wss.clients.forEach((client) =>
-        client.send(
-          JSON.stringify({
-            key,
-            val: s.value,
-          })
-        )
-      );
-    });
+    db.messages[message].signals[signal].onChange(onChangeListener(key));
   });
 });
 
