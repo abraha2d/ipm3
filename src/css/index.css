@@ -1,16 +1,19 @@
-@import "css/gear-indicator.css";
-@import "css/overlay.css";
-@import "css/range.css";
-@import "css/speed.css";
-@import "css/telltale.css";
-@import "css/temp.css";
-@import "css/time.css";
-@import "css/turn-signal.css";
-@import "css/vehicle.css";
+@import "gear-indicator.css";
+@import "overlay.css";
+@import "range.css";
+@import "speed.css";
+@import "telltale.css";
+@import "temp.css";
+@import "time.css";
+@import "turn-signal.css";
+@import "vehicle.css";
 
-@import "css/screens/energy.css";
+@import "screens/energy.css";
 
 #root {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   display: flex;

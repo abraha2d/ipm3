@@ -5,10 +5,7 @@ import { get, set } from "lodash";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import canData from "./initialData";
-import { GearLeverPosition, SelectedState, SwitchStatus } from "./types";
-
-import "./index.css";
+import { canData, GearLeverPosition, IPM3Selected, SwitchStatus } from "types";
 
 let exponentialBackoff = 1;
 let stalenessTimeout: NodeJS.Timeout | undefined = undefined;
@@ -51,34 +48,34 @@ const establishConnection = (firstTime: boolean) => {
 
     if (dj.key === "switches.swcLeftPressed" && dj.val === SwitchStatus.ON) {
       canData.ipm3.selected =
-        canData.ipm3.selected === SelectedState.NONE
-          ? SelectedState.LEFT
-          : SelectedState.NONE;
+        canData.ipm3.selected === IPM3Selected.NONE
+          ? IPM3Selected.LEFT
+          : IPM3Selected.NONE;
     } else if (dj.key === "switches.swcLeftTiltLeft") {
-      if (canData.ipm3.selected !== SelectedState.NONE) {
-        canData.ipm3.selected = SelectedState.LEFT;
+      if (canData.ipm3.selected !== IPM3Selected.NONE) {
+        canData.ipm3.selected = IPM3Selected.LEFT;
       }
     } else if (dj.key === "switches.swcLeftTiltRight") {
-      if (canData.ipm3.selected !== SelectedState.NONE) {
-        canData.ipm3.selected = SelectedState.RIGHT;
+      if (canData.ipm3.selected !== IPM3Selected.NONE) {
+        canData.ipm3.selected = IPM3Selected.RIGHT;
       }
     } else if (dj.key === "switches.swcRightScrollTicks") {
-      if (canData.ipm3.selected === SelectedState.LEFT) {
+      if (canData.ipm3.selected === IPM3Selected.LEFT) {
         canData.ipm3.leftScreen += dj.val;
-      } else if (canData.ipm3.selected === SelectedState.RIGHT) {
+      } else if (canData.ipm3.selected === IPM3Selected.RIGHT) {
         canData.ipm3.rightScreen += dj.val;
       }
     } else if (dj.key === "switches.gearLeverPosition") {
       if (dj.val === GearLeverPosition.HALF_UP) {
         canData.ipm3.selected =
-          canData.ipm3.selected === SelectedState.RIGHT
-            ? SelectedState.NONE
-            : SelectedState.LEFT;
+          canData.ipm3.selected === IPM3Selected.RIGHT
+            ? IPM3Selected.NONE
+            : IPM3Selected.LEFT;
       } else if (dj.val === GearLeverPosition.HALF_DOWN) {
         canData.ipm3.selected =
-          canData.ipm3.selected === SelectedState.LEFT
-            ? SelectedState.NONE
-            : SelectedState.RIGHT;
+          canData.ipm3.selected === IPM3Selected.LEFT
+            ? IPM3Selected.NONE
+            : IPM3Selected.RIGHT;
       }
     } else {
       set(canData, dj.key, dj.val);

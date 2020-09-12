@@ -1,17 +1,17 @@
-export enum FaultLampStatus {
+export enum FaultLampState {
   OFF,
   ON,
 }
 
-export enum LampFlashStatus {
+export enum LampFlashState {
   OFF,
   FLASH,
 }
 
 export interface ESPData {
   // Chassis ID145ESP_status
-  absFaultLamp: FaultLampStatus;
-  ebdFaultLamp: FaultLampStatus;
-  espFaultLamp: FaultLampStatus;
-  espLampFlash: LampFlashStatus;
+  absFaultLamp: FaultLampState;
+  ebdFaultLamp: FaultLampState;
+  espFaultLamp: FaultLampState;
+  espLampFlash: LampFlashState;
 }

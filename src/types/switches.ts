@@ -13,7 +13,7 @@ export enum SwitchStatus {
   FAULT,
 }
 
-export interface SwitchStatusData {
+export interface SwitchData {
   // ID229GearLever
   gearLeverPosition: GearLeverPosition;
   gearLeverButton: boolean;

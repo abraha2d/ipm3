@@ -4,32 +4,32 @@ import * as d3 from "d3";
 import {
   CANData,
   ExteriorColor,
-  FaultLampStatus,
+  FaultLampState,
   Gear,
   IPM3Screen,
   LightRequest,
-  LightStatus,
-  SeatbeltChimeStatus,
-  SeatbeltStatusData,
-  SelectedState,
+  LightState,
+  SeatbeltChimeState,
+  SeatbeltData,
+  IPM3Selected,
   SpoilerType,
   TPMSData,
 } from "./types";
 
-import "./App.css";
+import "css/index.css";
 import blank from "./assets/blank.png";
 
-const isLightOn = (l: LightStatus) =>
-  l === LightStatus.ON || l === LightStatus.FAULT;
+const isLightOn = (l: LightState) =>
+  l === LightState.ON || l === LightState.FAULT;
 
-const isLightsOff = (left: LightStatus, right: LightStatus) =>
-  (left === LightStatus.OFF && right === LightStatus.OFF) ||
-  (left === LightStatus.SNA && right === LightStatus.SNA);
+const isLightsOff = (left: LightState, right: LightState) =>
+  (left === LightState.OFF && right === LightState.OFF) ||
+  (left === LightState.SNA && right === LightState.SNA);
 
-const isLightsFault = (left: LightStatus, right: LightStatus) =>
-  left !== right || left === LightStatus.FAULT || right === LightStatus.FAULT;
+const isLightsFault = (left: LightState, right: LightState) =>
+  left !== right || left === LightState.FAULT || right === LightState.FAULT;
 
-const getLightsClass = (l: LightStatus, r: LightStatus, c: string) =>
+const getLightsClass = (l: LightState, r: LightState, c: string) =>
   `${!isLightsOff(l, r) ? c : ""}${isLightsFault(l, r) ? " fault" : ""}`;
 
 const getTurnSignalClass = (l: LightRequest) =>
@@ -66,21 +66,21 @@ const getTPMSClass = (t: TPMSData, c: string) =>
       : ""
   }${t.systemFault ? " fault" : ""}`;
 
-const isSeatbeltBuckled = (s: SeatbeltStatusData) =>
-  s.secondRowCenter === SeatbeltChimeStatus.NONE ||
-  s.secondRowLeft === SeatbeltChimeStatus.NONE ||
-  s.secondRowRight === SeatbeltChimeStatus.NONE ||
-  s.driver === SeatbeltChimeStatus.NONE ||
-  s.passenger === SeatbeltChimeStatus.NONE;
+const isSeatbeltBuckled = (s: SeatbeltData) =>
+  s.secondRowCenter === SeatbeltChimeState.NONE ||
+  s.secondRowLeft === SeatbeltChimeState.NONE ||
+  s.secondRowRight === SeatbeltChimeState.NONE ||
+  s.driver === SeatbeltChimeState.NONE ||
+  s.passenger === SeatbeltChimeState.NONE;
 
-const isSeatbeltFault = (s: SeatbeltStatusData) =>
-  s.secondRowCenter === SeatbeltChimeStatus.SNA ||
-  s.secondRowLeft === SeatbeltChimeStatus.SNA ||
-  s.secondRowRight === SeatbeltChimeStatus.SNA ||
-  s.driver === SeatbeltChimeStatus.SNA ||
-  s.passenger === SeatbeltChimeStatus.SNA;
+const isSeatbeltFault = (s: SeatbeltData) =>
+  s.secondRowCenter === SeatbeltChimeState.SNA ||
+  s.secondRowLeft === SeatbeltChimeState.SNA ||
+  s.secondRowRight === SeatbeltChimeState.SNA ||
+  s.driver === SeatbeltChimeState.SNA ||
+  s.passenger === SeatbeltChimeState.SNA;
 
-const getSeatbeltClass = (s: SeatbeltStatusData, c: string) =>
+const getSeatbeltClass = (s: SeatbeltData, c: string) =>
   `${!isSeatbeltBuckled(s) ? c : ""}${isSeatbeltFault(s) ? " fault" : ""}`;
 
 type AppProps = {
@@ -207,7 +207,7 @@ function App({ canData }: AppProps) {
         <img
           src={blank}
           className={`telltale ${getSeatbeltClass(
-            canData.seatbelts,
+            canData.seatbelt,
             "seatbelt"
           )}`}
           alt=""
@@ -223,7 +223,7 @@ function App({ canData }: AppProps) {
           <img
             src={blank}
             className={`telltale ${
-              canData.esp.absFaultLamp === FaultLampStatus.ON ? "abs" : ""
+              canData.esp.absFaultLamp === FaultLampState.ON ? "abs" : ""
             }`}
             alt=""
           />
@@ -322,14 +322,14 @@ function App({ canData }: AppProps) {
         </div>
       </div>
       <div className={`vehicle ${getColorClass(canData.gtw.exteriorColor)}`}>
-        {canData.lights.leftBrake === LightStatus.ON &&
-          canData.lights.rightBrake === LightStatus.ON && (
+        {canData.lights.leftBrake === LightState.ON &&
+          canData.lights.rightBrake === LightState.ON && (
             <div className="brake-center" />
           )}
-        {canData.lights.leftBrake === LightStatus.ON && (
+        {canData.lights.leftBrake === LightState.ON && (
           <div className="brake-left" />
         )}
-        {canData.lights.rightBrake === LightStatus.ON && (
+        {canData.lights.rightBrake === LightState.ON && (
           <div className="brake-right" />
         )}
         <div
@@ -341,25 +341,25 @@ function App({ canData }: AppProps) {
             isLightOn(canData.lights.lowBeamRight) ? " right" : ""
           }`}
         />
-        {canData.lights.leftTail === LightStatus.ON && (
+        {canData.lights.leftTail === LightState.ON && (
           <div className="park-left" />
         )}
-        {canData.lights.rightTail === LightStatus.ON && (
+        {canData.lights.rightTail === LightState.ON && (
           <div className="park-right" />
         )}
         {canData.gtw.spoilerType === SpoilerType.PASSIVE && (
           <div className="spoiler" />
         )}
-        {canData.lights.rearLeftTurnSignal === LightStatus.ON && (
+        {canData.lights.rearLeftTurnSignal === LightState.ON && (
           <div className="turn-left" />
         )}
-        {canData.lights.rearRightTurnSignal === LightStatus.ON && (
+        {canData.lights.rearRightTurnSignal === LightState.ON && (
           <div className="turn-right" />
         )}
       </div>
       <div
         className={`overlay screen left ${
-          canData.ipm3.selected === SelectedState.LEFT ? "selected" : ""
+          canData.ipm3.selected === IPM3Selected.LEFT ? "selected" : ""
         }`}
       >
         {canData.ipm3.leftScreen === IPM3Screen.CLOCK && <p>Clock</p>}
@@ -375,7 +375,7 @@ function App({ canData }: AppProps) {
       </div>
       <div
         className={`overlay screen right ${
-          canData.ipm3.selected === SelectedState.RIGHT ? "selected" : ""
+          canData.ipm3.selected === IPM3Selected.RIGHT ? "selected" : ""
         }`}
       >
         {canData.ipm3.rightScreen === IPM3Screen.CLOCK && <p>Clock</p>}

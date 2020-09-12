@@ -1,20 +1,20 @@
-export enum SeatbeltBuckleStatus {
+export enum SeatbeltBuckleState {
   UNBUCKLED,
   BUCKLED,
 }
 
-export enum SeatbeltChimeStatus {
+export enum SeatbeltChimeState {
   NONE,
   OCCUPIED_AND_UNBUCKLED,
   SNA,
 }
 
-export interface SeatbeltStatusData {
+export interface SeatbeltData {
   // ID3A1VCFRONT_vehicleStatus
-  secondRowCenter: SeatbeltChimeStatus;
-  secondRowLeft: SeatbeltChimeStatus;
-  secondRowRight: SeatbeltChimeStatus;
-  driverBuckle: SeatbeltBuckleStatus;
-  driver: SeatbeltChimeStatus;
-  passenger: SeatbeltChimeStatus;
+  secondRowCenter: SeatbeltChimeState;
+  secondRowLeft: SeatbeltChimeState;
+  secondRowRight: SeatbeltChimeState;
+  driverBuckle: SeatbeltBuckleState;
+  driver: SeatbeltChimeState;
+  passenger: SeatbeltChimeState;
 }
