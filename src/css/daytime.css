@@ -20,6 +20,14 @@
   fill: DarkGray;
 }
 
+.regen-gauge .value {
+  fill: DimGray;
+}
+
+.regen-gauge .units {
+  fill: DarkGray;
+}
+
 .speed > .units {
   color: DarkGray;
 }

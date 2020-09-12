@@ -15,7 +15,7 @@ import {
 } from "./types";
 
 import "./App.css";
-// import "./css/daytime.css";
+import "./css/daytime.css";
 import blank from "./assets/blank.png";
 
 const isLightOn = (l: LightStatus) =>
@@ -225,11 +225,6 @@ function App({ canData }: AppProps) {
             D
           </span>
         </div>
-        <div className="ambient-temperature C">
-          {Math.round(canData.sensors.tempAmbientFiltered_C)}
-        </div>
-      </div>
-      <div className="overlay bottom right">
         <div
           className={`current-time ${
             new Date(canData.unixTime_s * 1000).getHours() > 12 ? "pm" : "am"
@@ -243,6 +238,11 @@ function App({ canData }: AppProps) {
               })
               .split(" ")[0]
           }
+        </div>
+      </div>
+      <div className="overlay bottom right">
+        <div className="ambient-temperature C">
+          {Math.round(canData.sensors.tempAmbientFiltered_C)}
         </div>
         <div className="range mi">
           <span className="value">{canData.ui.range_mi}</span>
