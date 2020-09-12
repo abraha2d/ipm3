@@ -83,11 +83,16 @@ const isSeatbeltFault = (s: SeatbeltData) =>
 const getSeatbeltClass = (s: SeatbeltData, c: string) =>
   `${!isSeatbeltBuckled(s) ? c : ""}${isSeatbeltFault(s) ? " fault" : ""}`;
 
-type AppProps = {
+type CANDataProps = {
   canData: CANData;
 };
 
-function Energy({ canData }: AppProps) {
+interface AppProps extends CANDataProps {
+  onLeftSelect: () => void;
+  onRightSelect: () => void;
+}
+
+function Energy({ canData }: CANDataProps) {
   return (
     <div className="energy">
       <svg width={250} height={250}>
@@ -143,7 +148,7 @@ function Energy({ canData }: AppProps) {
   );
 }
 
-function App({ canData }: AppProps) {
+function App({ canData, onLeftSelect, onRightSelect }: AppProps) {
   return (
     <div className="App">
       <svg height="0" width="0">
@@ -361,6 +366,7 @@ function App({ canData }: AppProps) {
         className={`overlay screen left ${
           canData.ipm3.selected === IPM3Selected.LEFT ? "selected" : ""
         }`}
+        onClick={onLeftSelect}
       >
         {canData.ipm3.leftScreen === IPM3Screen.CLOCK && <p>Clock</p>}
         {canData.ipm3.leftScreen === IPM3Screen.MEDIA && <p>Media</p>}
@@ -377,6 +383,7 @@ function App({ canData }: AppProps) {
         className={`overlay screen right ${
           canData.ipm3.selected === IPM3Selected.RIGHT ? "selected" : ""
         }`}
+        onClick={onRightSelect}
       >
         {canData.ipm3.rightScreen === IPM3Screen.CLOCK && <p>Clock</p>}
         {canData.ipm3.rightScreen === IPM3Screen.MEDIA && <p>Media</p>}

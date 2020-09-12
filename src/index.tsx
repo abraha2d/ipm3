@@ -5,7 +5,13 @@ import { get, set } from "lodash";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import { canData, GearLeverPosition, IPM3Selected, SwitchStatus } from "types";
+import {
+  canData,
+  GearLeverPosition,
+  IPM3Screen,
+  IPM3Selected,
+  SwitchStatus,
+} from "types";
 
 let exponentialBackoff = 1;
 let stalenessTimeout: NodeJS.Timeout | undefined = undefined;
@@ -17,6 +23,57 @@ const refreshTimeout = (webSocket: WebSocket) => {
     webSocket.close();
     establishConnection(false);
   }, 5000);
+};
+
+const setSelected = (selected: IPM3Selected) => () => {
+  if (canData.ipm3.selected === selected) {
+    canData.ipm3.selected = IPM3Selected.NONE;
+  } else {
+    canData.ipm3.selected = selected;
+  }
+  renderApp();
+};
+
+const scrollSelected = (numTicks: number) => {
+  if (canData.ipm3.selected === IPM3Selected.LEFT) {
+    canData.ipm3.leftScreen += numTicks;
+    canData.ipm3.leftScreen = Math.min(
+      Math.max(canData.ipm3.leftScreen, 0),
+      IPM3Screen.MAP_OR_CALL
+    );
+  } else if (canData.ipm3.selected === IPM3Selected.RIGHT) {
+    canData.ipm3.rightScreen += numTicks;
+    canData.ipm3.rightScreen = Math.min(
+      Math.max(canData.ipm3.rightScreen, 0),
+      IPM3Screen.MAP_OR_CALL
+    );
+  }
+  renderApp();
+};
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft") {
+    setSelected(IPM3Selected.LEFT)();
+  } else if (event.key === "ArrowRight") {
+    setSelected(IPM3Selected.RIGHT)();
+  } else if (event.key === "ArrowUp") {
+    scrollSelected(-1);
+  } else if (event.key === "ArrowDown") {
+    scrollSelected(1);
+  }
+});
+
+const renderApp = () => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App
+        canData={canData}
+        onLeftSelect={setSelected(IPM3Selected.LEFT)}
+        onRightSelect={setSelected(IPM3Selected.RIGHT)}
+      />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
 };
 
 const establishConnection = (firstTime: boolean) => {
@@ -46,47 +103,25 @@ const establishConnection = (firstTime: boolean) => {
       console.error("Unknown key:", dj.key, "(value", dj.val, ")");
     }
 
-    if (dj.key === "switches.swcLeftPressed" && dj.val === SwitchStatus.ON) {
-      canData.ipm3.selected =
-        canData.ipm3.selected === IPM3Selected.NONE
-          ? IPM3Selected.LEFT
-          : IPM3Selected.NONE;
-    } else if (dj.key === "switches.swcLeftTiltLeft") {
-      if (canData.ipm3.selected !== IPM3Selected.NONE) {
-        canData.ipm3.selected = IPM3Selected.LEFT;
-      }
-    } else if (dj.key === "switches.swcLeftTiltRight") {
-      if (canData.ipm3.selected !== IPM3Selected.NONE) {
-        canData.ipm3.selected = IPM3Selected.RIGHT;
-      }
-    } else if (dj.key === "switches.swcRightScrollTicks") {
-      if (canData.ipm3.selected === IPM3Selected.LEFT) {
-        canData.ipm3.leftScreen += dj.val;
-      } else if (canData.ipm3.selected === IPM3Selected.RIGHT) {
-        canData.ipm3.rightScreen += dj.val;
-      }
-    } else if (dj.key === "switches.gearLeverPosition") {
-      if (dj.val === GearLeverPosition.HALF_UP) {
-        canData.ipm3.selected =
-          canData.ipm3.selected === IPM3Selected.RIGHT
-            ? IPM3Selected.NONE
-            : IPM3Selected.LEFT;
-      } else if (dj.val === GearLeverPosition.HALF_DOWN) {
-        canData.ipm3.selected =
-          canData.ipm3.selected === IPM3Selected.LEFT
-            ? IPM3Selected.NONE
-            : IPM3Selected.RIGHT;
-      }
-    } else {
-      set(canData, dj.key, dj.val);
-    }
+    set(canData, dj.key, dj.val);
 
-    ReactDOM.render(
-      <React.StrictMode>
-        <App canData={canData} />
-      </React.StrictMode>,
-      document.getElementById("root")
-    );
+    if (
+      (dj.key === "switches.gearLeverPosition" &&
+        dj.val === GearLeverPosition.HALF_UP) ||
+      (dj.key === "switches.swcLeftTiltLeft" && dj.val === SwitchStatus.ON)
+    ) {
+      setSelected(IPM3Selected.LEFT)();
+    } else if (
+      (dj.key === "switches.gearLeverPosition" &&
+        dj.val === GearLeverPosition.HALF_DOWN) ||
+      (dj.key === "switches.swcLeftTiltRight" && dj.val === SwitchStatus.ON)
+    ) {
+      setSelected(IPM3Selected.RIGHT)();
+    } else if (dj.key === "switches.swcRightScrollTicks") {
+      scrollSelected(dj.val);
+    } else {
+      renderApp();
+    }
   };
 
   webSocket.onerror = (event) => {
