@@ -3,6 +3,10 @@
   color: DimGray;
 }
 
+.light .gear-indicator {
+  color: DarkGray;
+}
+
 .gear-indicator > span {
   padding: 5px;
 }
@@ -10,4 +14,8 @@
 .gear-indicator > .selected {
   color: white;
   font-weight: 500;
+}
+
+.light .gear-indicator > .selected {
+  color: DimGray;
 }

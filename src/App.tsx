@@ -17,7 +17,6 @@ import {
 } from "./types";
 
 import "./App.css";
-import "./css/daytime.css";
 import blank from "./assets/blank.png";
 
 const isLightOn = (l: LightStatus) =>
@@ -90,7 +89,7 @@ type AppProps = {
 
 function Energy({ canData }: AppProps) {
   return (
-    <div className="screen-energy">
+    <div className="energy">
       <svg width={250} height={250}>
         <g transform="translate(125, 125)">
           <path
@@ -284,7 +283,7 @@ function App({ canData }: AppProps) {
           </span>
         </div>
         <div
-          className={`current-time ${
+          className={`time ${
             new Date(canData.unixTime_s * 1000).getHours() >= 12 ? "pm" : "am"
           }`}
         >
@@ -299,9 +298,7 @@ function App({ canData }: AppProps) {
         </div>
       </div>
       <div className="overlay bottom right">
-        <div
-          className={`ambient-temperature ${canData.ui.speedUnits ? "C" : "F"}`}
-        >
+        <div className={`temp ${canData.ui.speedUnits ? "C" : "F"}`}>
           {canData.ui.speedUnits
             ? Math.round(canData.sensors.tempAmbientFiltered_C)
             : Math.round(canData.sensors.tempAmbientFiltered_C * (9 / 5) + 32)}
@@ -361,7 +358,7 @@ function App({ canData }: AppProps) {
         )}
       </div>
       <div
-        className={`overlay left-screen ${
+        className={`overlay screen left ${
           canData.ipm3.selected === SelectedState.LEFT ? "selected" : ""
         }`}
       >
@@ -377,7 +374,7 @@ function App({ canData }: AppProps) {
         )}
       </div>
       <div
-        className={`overlay right-screen ${
+        className={`overlay screen right ${
           canData.ipm3.selected === SelectedState.RIGHT ? "selected" : ""
         }`}
       >

@@ -1,0 +1,11 @@
+.temp::after {
+  font-size: 18px;
+}
+
+.temp.C::after {
+  content: " °C";
+}
+
+.temp.F::after {
+  content: " °F";
+}

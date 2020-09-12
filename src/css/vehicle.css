@@ -1,5 +1,5 @@
 .vehicle {
-  background: url("../assets/car/drive/body.png");
+  background: url("~assets/car/drive/body.png");
   background-size: 100%;
   width: 150px;
   height: 143px;
@@ -13,13 +13,13 @@
   content: "";
   display: block;
 
-  background: url("../assets/car/drive/body_paint.png");
+  background: url("~assets/car/drive/body_paint.png");
   background-size: 100%;
   height: 143px;
 }
 
 .vehicle > .spoiler {
-  background: url("../assets/car/drive/spoiler.png");
+  background: url("~assets/car/drive/spoiler.png");
   background-size: 100%;
   width: 78px;
   height: 3px;
@@ -56,7 +56,7 @@
 }
 
 .vehicle > .brake-center {
-  background: url("../assets/car/drive/brake_center.png");
+  background: url("~assets/car/drive/brake_center.png");
   background-size: 100%;
   width: 32px;
   height: 13px;
@@ -65,7 +65,7 @@
 }
 
 .vehicle > .brake-left {
-  background: url("../assets/car/drive/brake_left.png");
+  background: url("~assets/car/drive/brake_left.png");
   background-size: 100%;
   width: 16px;
   height: 16px;
@@ -74,7 +74,7 @@
 }
 
 .vehicle > .brake-right {
-  background: url("../assets/car/drive/brake_right.png");
+  background: url("~assets/car/drive/brake_right.png");
   background-size: 100%;
   width: 16px;
   height: 16px;
@@ -83,7 +83,7 @@
 }
 
 .vehicle > .park-left {
-  background: url("../assets/car/drive/park_left.png");
+  background: url("~assets/car/drive/park_left.png");
   background-size: 100%;
   width: 30px;
   height: 18px;
@@ -92,7 +92,7 @@
 }
 
 .vehicle > .park-right {
-  background: url("../assets/car/drive/park_right.png");
+  background: url("~assets/car/drive/park_right.png");
   background-size: 100%;
   width: 30px;
   height: 18px;
@@ -101,7 +101,8 @@
 }
 
 .vehicle > .turn-left {
-  background: url("../assets/car/drive/turn_left.png");
+  /*background: url("~assets/car/drive/turn_left.png");*/
+  background: url("~assets/car/drive/brake_left.png");
   background-size: 100%;
   width: 35px;
   height: 35px;
@@ -110,7 +111,8 @@
 }
 
 .vehicle > .turn-right {
-  background: url("../assets/car/drive/turn_right.png");
+  /*background: url("~assets/car/drive/turn_right.png");*/
+  background: url("~assets/car/drive/brake_right.png");
   background-size: 100%;
   width: 35px;
   height: 35px;
@@ -121,7 +123,7 @@
 /** Headlights */
 
 .vehicle > .headlights {
-  background: url("../assets/car/drive/headlights.png");
+  background: url("~assets/car/drive/headlights.png");
   background-size: 100%;
   width: 318px;
   height: 81px;

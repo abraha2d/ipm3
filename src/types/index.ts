@@ -1,5 +1,4 @@
 import { CPData } from "./cp";
-// import { DASData } from "./das";
 import { DIData } from "./di";
 import { ESPData } from "./esp";
 import { GPSData } from "./gps";
@@ -13,7 +12,6 @@ import { TPMSData } from "./tpms";
 import { UIData } from "./ui";
 
 export * from "./cp";
-// export * from "./das";
 export * from "./di";
 export * from "./esp";
 export * from "./gps";
@@ -51,7 +49,6 @@ export interface IPM3Data {
 export interface CANData {
   airbagLight: boolean;
   cp: CPData;
-  // das: DASData;
   di: DIData;
   esp: ESPData;
   gps: GPSData;

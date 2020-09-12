@@ -15,3 +15,7 @@
   color: DimGray;
   font-size: 18px;
 }
+
+.light .speed > .units {
+  color: DarkGray;
+}

@@ -6,9 +6,9 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import canData from "./initialData";
+import { GearLeverPosition, SelectedState, SwitchStatus } from "./types";
 
 import "./index.css";
-import { GearLeverPosition, SelectedState, SwitchStatus } from "./types";
 
 let exponentialBackoff = 1;
 let stalenessTimeout: NodeJS.Timeout | undefined = undefined;
@@ -43,10 +43,12 @@ const establishConnection = (firstTime: boolean) => {
   webSocket.onmessage = (event) => {
     exponentialBackoff = 1;
     refreshTimeout(webSocket);
+
     const dj = JSON.parse(event.data);
     if (get(canData, dj.key) === undefined) {
       console.error("Unknown key:", dj.key, "(value", dj.val, ")");
     }
+
     if (dj.key === "switches.swcLeftPressed" && dj.val === SwitchStatus.ON) {
       canData.ipm3.selected =
         canData.ipm3.selected === SelectedState.NONE
@@ -81,6 +83,7 @@ const establishConnection = (firstTime: boolean) => {
     } else {
       set(canData, dj.key, dj.val);
     }
+
     ReactDOM.render(
       <React.StrictMode>
         <App canData={canData} />

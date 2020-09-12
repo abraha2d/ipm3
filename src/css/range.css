@@ -20,14 +20,18 @@
 
 .range > .icon {
   position: relative;
-  background: url("../assets/night/battery_color_bg.png");
+  background: url("~assets/night/battery_color_bg.png");
   width: 64px;
   height: 20px;
 }
 
+.light .range > .icon {
+  background: url("~assets/day/battery_color_bg.png");
+}
+
 .range > .icon > .sprite {
   position: absolute;
-  background: url("../assets/battery_color_sprite.png");
+  background: url("~assets/battery_color_sprite.png");
   width: 60px;
   height: 20px;
 }

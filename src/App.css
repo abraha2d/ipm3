@@ -1,13 +1,14 @@
-@import "css/ambient-temperature.css";
-@import "css/current-time.css";
 @import "css/gear-indicator.css";
-@import "css/overlays.css";
-@import "css/range-indicator.css";
-@import "css/speedometer.css";
-@import "css/screen-energy.css";
-@import "css/telltale-indicators.css";
-@import "css/turn-signals.css";
+@import "css/overlay.css";
+@import "css/range.css";
+@import "css/speed.css";
+@import "css/telltale.css";
+@import "css/temp.css";
+@import "css/time.css";
+@import "css/turn-signal.css";
 @import "css/vehicle.css";
+
+@import "css/screens/energy.css";
 
 #root {
   width: 100vw;
@@ -25,6 +26,11 @@
   color: white;
   font-family: "Ubuntu", sans-serif;
   font-size: 24px;
+}
+
+.App.light {
+  background: WhiteSmoke;
+  color: DimGray;
 }
 
 @keyframes fault {

@@ -1,0 +1,11 @@
+.time::after {
+  font-size: 18px;
+}
+
+.time.am::after {
+  content: " am";
+}
+
+.time.pm::after {
+  content: " pm";
+}

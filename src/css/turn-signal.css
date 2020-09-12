@@ -6,7 +6,7 @@
 }
 
 .turn-signal.active {
-  background: url("../assets/turn_indicator_circle_small.png");
+  background: url("~assets/turn_indicator_circle_small.png");
 }
 
 .turn-signal.active::after {
@@ -17,7 +17,7 @@
   top: 4px;
   left: 4px;
 
-  background: url("../assets/turn_indicator_arrow_small.png");
+  background: url("~assets/turn_indicator_arrow_small.png");
   width: 40px;
   height: 40px;
 }

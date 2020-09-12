@@ -1,0 +1,36 @@
+.energy .power-line,
+.energy .regen-line {
+  fill: DimGray;
+}
+
+.light .energy .power-line,
+.light .energy .regen-line {
+  fill: DarkGray;
+}
+
+.energy .actual-line {
+  fill: #ffb641;
+}
+
+.energy .actual-line.regen {
+  fill: #02e359;
+}
+
+.energy .value {
+  fill: white;
+  text-anchor: end;
+}
+
+.light .energy .value {
+  fill: DimGray;
+}
+
+.energy .units {
+  fill: DimGray;
+  text-anchor: start;
+  font-size: 18px;
+}
+
+.light .energy .units {
+  fill: DarkGray;
+}
