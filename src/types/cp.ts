@@ -4,7 +4,8 @@ export enum ChargeCableState {
   CONNECTED,
 }
 
-export interface ChargePortStatus {
+export interface CPData {
+  // ID25DCP_status
   chargeCableState: ChargeCableState;
   chargeDoorOpen: boolean;
 }

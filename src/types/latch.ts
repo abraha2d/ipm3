@@ -11,10 +11,15 @@ export enum LatchStatus {
 }
 
 export interface LatchStatusData {
-  frunk: LatchStatus;
+  // ID102VCLEFT_doorStatus
   frontLeft: LatchStatus;
   rearLeft: LatchStatus;
+
+  // ID103VCRIGHT_doorStatus
   frontRight: LatchStatus;
   rearRight: LatchStatus;
   trunk: LatchStatus;
+
+  // ID2E1VCFRONT_status
+  frunk: LatchStatus;
 }

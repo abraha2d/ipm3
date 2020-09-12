@@ -9,6 +9,7 @@ export enum LampFlashStatus {
 }
 
 export interface ESPData {
+  // Chassis ID145ESP_status
   absFaultLamp: FaultLampStatus;
   ebdFaultLamp: FaultLampStatus;
   espFaultLamp: FaultLampStatus;

@@ -10,12 +10,21 @@ export enum SunStatus {
 }
 
 export interface UIData {
-  isSunUp: SunStatus;
+  // ID123UI_alertMatrix1
   parkBrakeFault: boolean;
-  range_mi: number;
-  ratedWHpM: number;
-  SOC_percent: number;
-  speed: number;
+
+  // ID257UIspeed
   speedUnits: SpeedUnits;
-  systemPowerLimit_kW: number;
+  speed: number;
+
+  // ID2D3UI_solarData
+  isSunUp: SunStatus;
+
+  // ID33AUI_rangeSOC
+  range_mi: number;
+  SOC_percent: number;
+  ratedWHpM: number;
+
+  // ID3F3UI_odo
+  odometer: number;
 }

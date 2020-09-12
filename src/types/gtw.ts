@@ -13,6 +13,7 @@ export enum SpoilerType {
 }
 
 export interface GTWData {
+  // ID7FFcarConfig
   exteriorColor: ExteriorColor;
   spoilerType: SpoilerType;
 }

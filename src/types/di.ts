@@ -24,13 +24,15 @@ export enum TractionControlMode {
 }
 
 export interface DIData {
+  // ID118DriveSystemStatus
   gear: Gear;
   trackModeState: TrackModeState;
   tractionControlMode: TractionControlMode;
 
-  tcTelltaleOn: boolean;
+  // ID2B6DI_chassisControlStatus
   tcTelltaleFlash: boolean;
-  vdcTelltaleOn: boolean;
+  tcTelltaleOn: boolean;
   vdcTelltaleFlash: boolean;
+  vdcTelltaleOn: boolean;
   vehicleHoldTelltaleOn: boolean;
 }

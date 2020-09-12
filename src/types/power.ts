@@ -1,14 +1,17 @@
 export interface PowerData {
+  // ID252BMS_powerAvailable
+  maxDischarge_kW: number;
+  maxRegen_kW: number;
+
+  // ID266RearInverterPower
+  rearLimit_kW: number;
+  rear_kW: number;
+
+  // ID2E5FrontInverterPower
   front_kW: number;
-  frontHeat_kW: number;
   frontLimit_kW: number;
 
-  rear_kW: number;
-  rearHeat_kW: number;
-  rearLimit_kW: number;
-
-  systemRegenMax_kW: number;
-  systemHeatMax_kW: number;
-  systemHeat_kW: number;
-  systemDriveMax_kW: number;
+  // Chassis ID336MaxPowerRating
+  regenRating_kW: number;
+  powerRating_kW: number;
 }

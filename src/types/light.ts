@@ -12,6 +12,20 @@ export enum LightStatus {
 }
 
 export interface LightStatusData {
+  // ID3E2VCLEFT_lightStatus
+  leftBrake: LightStatus;
+  dynamicBrake: LightRequest;
+  leftTail: LightStatus;
+  rearLeftTurnSignal: LightStatus;
+
+  // ID3E3VCRIGHT_lightStatus
+  rightBrake: LightStatus;
+  rearFog: LightStatus;
+  reverse: LightStatus;
+  rightTail: LightStatus;
+  rearRightTurnSignal: LightStatus;
+
+  // ID3F5VCFRONT_lighting
   DRLLeft: LightStatus;
   DRLRight: LightStatus;
   fogLeft: LightStatus;
@@ -29,15 +43,4 @@ export interface LightStatusData {
   sideRepeaterRight: LightStatus;
   turnSignalLeft: LightStatus;
   turnSignalRight: LightStatus;
-
-  leftBrake: LightStatus;
-  dynamicBrake: LightRequest;
-  leftTail: LightStatus;
-  rearLeftTurnSignal: LightStatus;
-
-  rightBrake: LightStatus;
-  rearFog: LightStatus;
-  reverse: LightStatus;
-  rightTail: LightStatus;
-  rearRightTurnSignal: LightStatus;
 }

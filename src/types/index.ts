@@ -1,3 +1,4 @@
+import { CPData } from "./cp";
 // import { DASData } from "./das";
 import { DIData } from "./di";
 import { ESPData } from "./esp";
@@ -10,9 +11,8 @@ import { SeatbeltStatusData } from "./seatbelt";
 import { SwitchStatusData } from "./switch";
 import { TPMSData } from "./tpms";
 import { UIData } from "./ui";
-import { ChargePortStatus } from "./chargeport";
 
-export * from "./chargeport";
+export * from "./cp";
 // export * from "./das";
 export * from "./di";
 export * from "./esp";
@@ -28,7 +28,7 @@ export * from "./ui";
 
 export interface CANData {
   airbagLight: boolean;
-  chargePort: ChargePortStatus;
+  cp: CPData;
   // das: DASData;
   di: DIData;
   esp: ESPData;
@@ -39,10 +39,12 @@ export interface CANData {
   power: PowerData;
   seatbelts: SeatbeltStatusData;
   sensors: {
+    // ID321VCFRONT_sensors
     tempAmbientFiltered_C: number;
   };
   switches: SwitchStatusData;
   tpms: TPMSData;
   ui: UIData;
+  // ID528UnixTime
   unixTime_s: number;
 }

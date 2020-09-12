@@ -6,6 +6,7 @@ export enum SwitchStatus {
 }
 
 export interface SwitchStatusData {
+  // ID3C2VCLEFT_switchStatus
   swcLeftDoublePress: boolean;
   swcLeftPressed: SwitchStatus;
   swcLeftScrollTicks: number;
