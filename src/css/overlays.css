@@ -29,3 +29,25 @@
 .overlay.right {
   right: 0;
 }
+
+.overlay.left-screen,
+.overlay.right-screen {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  bottom: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay.left-screen {
+  left: 15px;
+}
+
+.overlay.right-screen {
+  right: 15px;
+}
+
+.overlay.selected {
+  background: #80808080;
+}

@@ -1,0 +1,23 @@
+.screen-energy .power-line,
+.screen-energy .regen-line {
+  fill: DimGray;
+}
+
+.screen-energy .actual-line {
+  fill: #ffb641;
+}
+
+.screen-energy .actual-line.regen {
+  fill: #02e359;
+}
+
+.screen-energy .value {
+  fill: white;
+  text-anchor: end;
+}
+
+.screen-energy .units {
+  fill: DimGray;
+  text-anchor: start;
+  font-size: 18px;
+}

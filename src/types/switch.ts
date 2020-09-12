@@ -1,3 +1,11 @@
+export enum GearLeverPosition {
+  CENTER,
+  HALF_UP,
+  FULL_UP,
+  HALF_DOWN,
+  FULL_DOWN,
+}
+
 export enum SwitchStatus {
   SNA,
   OFF,
@@ -6,6 +14,10 @@ export enum SwitchStatus {
 }
 
 export interface SwitchStatusData {
+  // ID229GearLever
+  gearLeverPosition: GearLeverPosition;
+  gearLeverButton: boolean;
+
   // ID3C2VCLEFT_switchStatus
   swcLeftDoublePress: boolean;
   swcLeftPressed: SwitchStatus;

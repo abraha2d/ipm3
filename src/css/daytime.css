@@ -15,16 +15,16 @@
   background: url("../assets/day/battery_color_bg.png");
 }
 
-.regen-gauge .power-line,
-.regen-gauge .regen-line {
+.screen-energy .power-line,
+.screen-energy .regen-line {
   fill: DarkGray;
 }
 
-.regen-gauge .value {
+.screen-energy .value {
   fill: DimGray;
 }
 
-.regen-gauge .units {
+.screen-energy .units {
   fill: DarkGray;
 }
 

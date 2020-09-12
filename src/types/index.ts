@@ -26,6 +26,28 @@ export * from "./switch";
 export * from "./tpms";
 export * from "./ui";
 
+export enum IPM3Screen {
+  CLOCK,
+  MEDIA,
+  ENERGY,
+  TRIPS,
+  CAR_STATUS,
+  MAP_OR_CALL,
+}
+
+export enum SelectedState {
+  NONE,
+  LEFT,
+  RIGHT,
+}
+
+export interface IPM3Data {
+  leftScreen: IPM3Screen;
+  rightScreen: IPM3Screen;
+
+  selected: SelectedState;
+}
+
 export interface CANData {
   airbagLight: boolean;
   cp: CPData;
@@ -34,6 +56,7 @@ export interface CANData {
   esp: ESPData;
   gps: GPSData;
   gtw: GTWData;
+  ipm3: IPM3Data;
   latches: LatchStatusData;
   lights: LightStatusData;
   power: PowerData;

@@ -4,12 +4,15 @@ import {
   ExteriorColor,
   FaultLampStatus,
   Gear,
+  GearLeverPosition,
+  IPM3Screen,
   LampFlashStatus,
   LatchStatus,
   LightRequest,
   LightStatus,
   SeatbeltBuckleStatus,
   SeatbeltChimeStatus,
+  SelectedState,
   SpeedUnits,
   SpoilerType,
   SunStatus,
@@ -49,6 +52,11 @@ export let canData: CANData = {
   gtw: {
     exteriorColor: ExteriorColor.MIDNIGHT_SILVER,
     spoilerType: SpoilerType.NOT_INSTALLED,
+  },
+  ipm3: {
+    leftScreen: IPM3Screen.MAP_OR_CALL,
+    rightScreen: IPM3Screen.ENERGY,
+    selected: SelectedState.NONE,
   },
   latches: {
     frontLeft: LatchStatus.SNA,
@@ -108,6 +116,8 @@ export let canData: CANData = {
     tempAmbientFiltered_C: 0,
   },
   switches: {
+    gearLeverPosition: GearLeverPosition.CENTER,
+    gearLeverButton: false,
     swcLeftDoublePress: false,
     swcLeftPressed: SwitchStatus.SNA,
     swcLeftScrollTicks: 0,

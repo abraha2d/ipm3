@@ -13,6 +13,11 @@
   font-size: 18px;
 }
 
+.range.km > .value::after {
+  content: " km";
+  font-size: 18px;
+}
+
 .range > .icon {
   position: relative;
   background: url("../assets/night/battery_color_bg.png");

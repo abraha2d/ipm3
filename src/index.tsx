@@ -8,6 +8,7 @@ import * as serviceWorker from "./serviceWorker";
 import canData from "./initialData";
 
 import "./index.css";
+import { GearLeverPosition, SelectedState, SwitchStatus } from "./types";
 
 let exponentialBackoff = 1;
 let stalenessTimeout: NodeJS.Timeout | undefined = undefined;
@@ -46,7 +47,40 @@ const establishConnection = (firstTime: boolean) => {
     if (get(canData, dj.key) === undefined) {
       console.error("Unknown key:", dj.key, "(value", dj.val, ")");
     }
-    set(canData, dj.key, dj.val);
+    if (dj.key === "switches.swcLeftPressed" && dj.val === SwitchStatus.ON) {
+      canData.ipm3.selected =
+        canData.ipm3.selected === SelectedState.NONE
+          ? SelectedState.LEFT
+          : SelectedState.NONE;
+    } else if (dj.key === "switches.swcLeftTiltLeft") {
+      if (canData.ipm3.selected !== SelectedState.NONE) {
+        canData.ipm3.selected = SelectedState.LEFT;
+      }
+    } else if (dj.key === "switches.swcLeftTiltRight") {
+      if (canData.ipm3.selected !== SelectedState.NONE) {
+        canData.ipm3.selected = SelectedState.RIGHT;
+      }
+    } else if (dj.key === "switches.swcRightScrollTicks") {
+      if (canData.ipm3.selected === SelectedState.LEFT) {
+        canData.ipm3.leftScreen += dj.val;
+      } else if (canData.ipm3.selected === SelectedState.RIGHT) {
+        canData.ipm3.rightScreen += dj.val;
+      }
+    } else if (dj.key === "switches.gearLeverPosition") {
+      if (dj.val === GearLeverPosition.HALF_UP) {
+        canData.ipm3.selected =
+          canData.ipm3.selected === SelectedState.RIGHT
+            ? SelectedState.NONE
+            : SelectedState.LEFT;
+      } else if (dj.val === GearLeverPosition.HALF_DOWN) {
+        canData.ipm3.selected =
+          canData.ipm3.selected === SelectedState.LEFT
+            ? SelectedState.NONE
+            : SelectedState.RIGHT;
+      }
+    } else {
+      set(canData, dj.key, dj.val);
+    }
     ReactDOM.render(
       <React.StrictMode>
         <App canData={canData} />

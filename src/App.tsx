@@ -6,10 +6,12 @@ import {
   ExteriorColor,
   FaultLampStatus,
   Gear,
+  IPM3Screen,
   LightRequest,
   LightStatus,
   SeatbeltChimeStatus,
   SeatbeltStatusData,
+  SelectedState,
   SpoilerType,
   TPMSData,
 } from "./types";
@@ -85,6 +87,62 @@ const getSeatbeltClass = (s: SeatbeltStatusData, c: string) =>
 type AppProps = {
   canData: CANData;
 };
+
+function Energy({ canData }: AppProps) {
+  return (
+    <div className="screen-energy">
+      <svg width={250} height={250}>
+        <g transform="translate(125, 125)">
+          <path
+            className="power-line"
+            d={
+              d3.arc()({
+                innerRadius: 100,
+                outerRadius: 101,
+                startAngle: (-90 * Math.PI) / 180,
+                endAngle: (45 * Math.PI) / 180,
+              }) as any
+            }
+          />
+          <path
+            className="regen-line"
+            d={
+              d3.arc()({
+                innerRadius: 100,
+                outerRadius: 101,
+                startAngle: (-90 * Math.PI) / 180,
+                endAngle: (-135 * Math.PI) / 180,
+              }) as any
+            }
+          />
+          <path
+            className={`actual-line ${
+              canData.power.rear_kW + canData.power.front_kW < 0 ? "regen" : ""
+            }`}
+            d={
+              d3.arc()({
+                innerRadius: 95,
+                outerRadius: 100,
+                startAngle: (-90 * Math.PI) / 180,
+                endAngle:
+                  ((-90 +
+                    (canData.power.rear_kW + canData.power.front_kW) / 3) *
+                    Math.PI) /
+                  180,
+              }) as any
+            }
+          />
+        </g>
+        <g transform="translate(120, 130)">
+          <text className="value">
+            {Math.round(canData.power.rear_kW + canData.power.front_kW)}
+          </text>
+          <text className="units">&nbsp;kW</text>
+        </g>
+      </svg>
+    </div>
+  );
+}
 
 function App({ canData }: AppProps) {
   return (
@@ -227,7 +285,7 @@ function App({ canData }: AppProps) {
         </div>
         <div
           className={`current-time ${
-            new Date(canData.unixTime_s * 1000).getHours() > 12 ? "pm" : "am"
+            new Date(canData.unixTime_s * 1000).getHours() >= 12 ? "pm" : "am"
           }`}
         >
           {
@@ -241,11 +299,19 @@ function App({ canData }: AppProps) {
         </div>
       </div>
       <div className="overlay bottom right">
-        <div className="ambient-temperature C">
-          {Math.round(canData.sensors.tempAmbientFiltered_C)}
+        <div
+          className={`ambient-temperature ${canData.ui.speedUnits ? "C" : "F"}`}
+        >
+          {canData.ui.speedUnits
+            ? Math.round(canData.sensors.tempAmbientFiltered_C)
+            : Math.round(canData.sensors.tempAmbientFiltered_C * (9 / 5) + 32)}
         </div>
-        <div className="range mi">
-          <span className="value">{canData.ui.range_mi}</span>
+        <div className={`range ${canData.ui.speedUnits ? "km" : "mi"}`}>
+          <span className="value">
+            {canData.ui.speedUnits
+              ? canData.ui.range_mi * 1.609
+              : canData.ui.range_mi}
+          </span>
           <div className="icon">
             <img
               src={blank}
@@ -294,56 +360,39 @@ function App({ canData }: AppProps) {
           <div className="turn-right" />
         )}
       </div>
-      <div className="regen-gauge">
-        <svg width={250} height={250}>
-          <g transform="translate(125, 125)">
-            <path
-              className="power-line"
-              d={
-                d3.arc()({
-                  innerRadius: 100,
-                  outerRadius: 101,
-                  startAngle: (-90 * Math.PI) / 180,
-                  endAngle: (45 * Math.PI) / 180,
-                }) as any
-              }
-            />
-            <path
-              className="regen-line"
-              d={
-                d3.arc()({
-                  innerRadius: 100,
-                  outerRadius: 101,
-                  startAngle: (-90 * Math.PI) / 180,
-                  endAngle: (-135 * Math.PI) / 180,
-                }) as any
-              }
-            />
-            <path
-              className={`actual-line ${
-                canData.power.rear_kW + canData.power.front_kW < 0
-                  ? "regen"
-                  : ""
-              }`}
-              d={
-                d3.arc()({
-                  innerRadius: 95,
-                  outerRadius: 100,
-                  startAngle: (-90 * Math.PI) / 180,
-                  endAngle:
-                    ((-90 +
-                      (canData.power.rear_kW + canData.power.front_kW) / 3) *
-                      Math.PI) /
-                    180,
-                }) as any
-              }
-            />
-            <text className="value">
-              {Math.round(canData.power.rear_kW + canData.power.front_kW)}
-            </text>
-            <text className="units">kW</text>
-          </g>
-        </svg>
+      <div
+        className={`overlay left-screen ${
+          canData.ipm3.selected === SelectedState.LEFT ? "selected" : ""
+        }`}
+      >
+        {canData.ipm3.leftScreen === IPM3Screen.CLOCK && <p>Clock</p>}
+        {canData.ipm3.leftScreen === IPM3Screen.MEDIA && <p>Media</p>}
+        {canData.ipm3.leftScreen === IPM3Screen.ENERGY && (
+          <Energy canData={canData} />
+        )}
+        {canData.ipm3.leftScreen === IPM3Screen.TRIPS && <p>Trips</p>}
+        {canData.ipm3.leftScreen === IPM3Screen.CAR_STATUS && <p>Car Status</p>}
+        {canData.ipm3.leftScreen === IPM3Screen.MAP_OR_CALL && (
+          <p>No active route</p>
+        )}
+      </div>
+      <div
+        className={`overlay right-screen ${
+          canData.ipm3.selected === SelectedState.RIGHT ? "selected" : ""
+        }`}
+      >
+        {canData.ipm3.rightScreen === IPM3Screen.CLOCK && <p>Clock</p>}
+        {canData.ipm3.rightScreen === IPM3Screen.MEDIA && <p>Media</p>}
+        {canData.ipm3.rightScreen === IPM3Screen.ENERGY && (
+          <Energy canData={canData} />
+        )}
+        {canData.ipm3.rightScreen === IPM3Screen.TRIPS && <p>Trips</p>}
+        {canData.ipm3.rightScreen === IPM3Screen.CAR_STATUS && (
+          <p>Car Status</p>
+        )}
+        {canData.ipm3.rightScreen === IPM3Screen.MAP_OR_CALL && (
+          <p>No active call</p>
+        )}
       </div>
     </div>
   );
