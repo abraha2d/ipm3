@@ -1,7 +1,4 @@
-import { ExteriorColor, LightState } from "types";
-
-export const isLightOn = (l: LightState) =>
-  l === LightState.ON || l === LightState.FAULT;
+import { ExteriorColor, Gear, LatchState, LightState } from "types";
 
 export const getColorClass = (c: ExteriorColor) => {
   switch (c) {
@@ -19,4 +16,15 @@ export const getColorClass = (c: ExteriorColor) => {
     default:
       return "midnight";
   }
+};
+
+export const getOpen = (l: LatchState) => (isLatchClosed(l) ? "" : "open");
+
+const isLatchClosed = (l: LatchState) => l === LatchState.CLOSED;
+
+export const isLightOn = (l: LightState) =>
+  l === LightState.ON || l === LightState.FAULT;
+
+export const isVehicleParked = (gear: Gear) => {
+  return gear === Gear.P || gear === Gear.SNA || gear === Gear.INVALID;
 };

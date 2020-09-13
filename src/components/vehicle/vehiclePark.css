@@ -1,0 +1,169 @@
+.vehicle.park {
+  background: url("~assets/car/top/body.png");
+  background-size: 100%;
+  width: 360px;
+  height: 360px;
+
+  position: absolute;
+  bottom: 0;
+  left: 220px;
+}
+
+.vehicle.park.visible {
+  opacity: 1;
+}
+
+.vehicle.park::before {
+  content: "";
+  display: block;
+
+  background: url("~assets/car/top/body_paint.png");
+  background-size: 100%;
+  height: 360px;
+}
+
+.vehicle.park > div {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vehicle.park > div::before,
+.vehicle.park > div::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.vehicle.park > .frunk {
+  background: url("~assets/car/top/frunk_closed.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .frunk::before {
+  background: url("~assets/car/top/frunk_closed_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .frunk.open {
+  background: url("~assets/car/top/frunk_open.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .frunk.open::before {
+  background: url("~assets/car/top/frunk_open_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .frunk.open::after {
+  background: url("~assets/car/top/frunk_open_emblems.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-front {
+  background: url("~assets/car/top/left_front_closed.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-front::before {
+  background: url("~assets/car/top/left_front_closed_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-front.open {
+  background: url("~assets/car/top/left_front_open.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-front.open::before {
+  background: url("~assets/car/top/left_front_open_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-rear {
+  background: url("~assets/car/top/left_rear_closed.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-rear::before {
+  background: url("~assets/car/top/left_rear_closed_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-rear.open {
+  background: url("~assets/car/top/left_rear_open.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .left-rear.open::before {
+  background: url("~assets/car/top/left_rear_open_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-front {
+  background: url("~assets/car/top/right_front_closed.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-front::before {
+  background: url("~assets/car/top/right_front_closed_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-front.open {
+  background: url("~assets/car/top/right_front_open.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-front.open::before {
+  background: url("~assets/car/top/right_front_open_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-rear {
+  background: url("~assets/car/top/right_rear_closed.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-rear::before {
+  background: url("~assets/car/top/right_rear_closed_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-rear.open {
+  background: url("~assets/car/top/right_rear_open.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .right-rear.open::before {
+  background: url("~assets/car/top/right_rear_open_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .trunk {
+  background: url("~assets/car/top/trunk_closed.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .trunk::before {
+  background: url("~assets/car/top/trunk_closed_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .trunk.open {
+  background: url("~assets/car/top/trunk_open.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .trunk.open::before {
+  background: url("~assets/car/top/trunk_open_paint.png");
+  background-size: 100%;
+}
+
+.vehicle.park > .trunk.open::after {
+  background: url("~assets/car/top/trunk_open_emblems.png");
+  background-size: 100%;
+}
