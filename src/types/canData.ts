@@ -70,7 +70,7 @@ export let canData: CANData = {
     spoilerType: SpoilerType.NOT_INSTALLED,
   },
   ipm3: {
-    leftScreen: IPM3Screen.NAV_OR_PHONE,
+    leftScreen: IPM3Screen.CLOCK,
     rightScreen: IPM3Screen.ENERGY,
     selected: IPM3Selected.NONE,
   },

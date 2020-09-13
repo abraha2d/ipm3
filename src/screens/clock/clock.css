@@ -1,0 +1,65 @@
+.clock-base {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  border: 2px solid DimGray;
+}
+
+.clock-base > .center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 100%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.clock-base > .hand {
+  --hand-width: 4px;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - var(--hand-width) / 2);
+  width: var(--hand-width);
+  transform-origin: top;
+  transform: rotate(180deg);
+  /*transition: 1s linear;*/
+}
+
+.clock-base > .hand.hour {
+  --hand-width: 4px;
+  height: 40px;
+  background: DimGray;
+}
+
+.clock-base > .hand.minute {
+  --hand-width: 3px;
+  height: 70px;
+  background: DarkGray;
+}
+
+.clock-base > .hand.second {
+  --hand-width: 2px;
+  height: 85px;
+  background: Red;
+  transform: rotate(192deg);
+}
+
+.clock-base > .tick {
+  --tick-width: 2px;
+  --tick-height: 6px;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - var(--tick-width) / 2);
+  width: var(--tick-width);
+  height: var(--tick-height);
+  background: gray;
+  transform-origin: calc(var(--tick-width) / 2)
+    calc(-100px + var(--tick-height));
+}
+
+.clock-base > .tick.large {
+  --tick-height: 10px;
+}

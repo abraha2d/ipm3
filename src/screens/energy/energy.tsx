@@ -27,7 +27,7 @@ export const Energy = ({ canData, currentScreen }: ScreenProps) => {
             d={
               d3.arc()({
                 innerRadius: 100,
-                outerRadius: 101,
+                outerRadius: 102,
                 startAngle: (-90 * Math.PI) / 180,
                 endAngle: (45 * Math.PI) / 180,
               }) as any
@@ -38,7 +38,7 @@ export const Energy = ({ canData, currentScreen }: ScreenProps) => {
             d={
               d3.arc()({
                 innerRadius: 100,
-                outerRadius: 101,
+                outerRadius: 102,
                 startAngle: (-90 * Math.PI) / 180,
                 endAngle: (-135 * Math.PI) / 180,
               }) as any
