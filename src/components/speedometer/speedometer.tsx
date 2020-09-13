@@ -1,5 +1,5 @@
 import React from "react";
-import { CANDataProps } from "types";
+import { CANDataProps, Gear } from "types";
 import { getTurnSignalClass } from "./utils";
 
 import "css/overlay.css";
@@ -14,8 +14,14 @@ export const Speedometer = ({ canData }: CANDataProps) => {
         )} left`}
       />
       <div className="speed">
-        <span className="value">{Math.round(canData.ui.speed)}</span>
-        <span className="units">{canData.ui.speedUnits ? "KM/H" : "MPH"}</span>
+        <span className="value">
+          {canData.di.gear === Gear.SNA ? "P" : Math.round(canData.ui.speed)}
+        </span>
+        {canData.di.gear === Gear.SNA || (
+          <span className="units">
+            {canData.ui.speedUnits ? "KM/H" : "MPH"}
+          </span>
+        )}
       </div>
       <div
         className={`turn-signal ${getTurnSignalClass(

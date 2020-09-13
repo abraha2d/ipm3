@@ -28,8 +28,8 @@ export const TelltaleIndicators = ({ canData }: CANDataProps) => {
       <div className="overlay top right">
         <FaultIndicator steady={canData.esp.absFaultLamp} class="abs" />
         <FaultIndicator
-          steady={canData.esp.espFaultLamp}
-          flash={canData.esp.espLampFlash}
+          steady={canData.esp.espFaultLamp || canData.di.vdcTelltaleOn}
+          flash={canData.esp.espLampFlash || canData.di.vdcTelltaleFlash}
           class="esp"
         />
         <LightIndicator

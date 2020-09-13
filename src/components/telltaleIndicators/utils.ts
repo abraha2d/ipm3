@@ -1,4 +1,29 @@
-import { LightState, SeatbeltChimeState, SeatbeltData, TPMSData } from "types";
+import {
+  FaultLampState,
+  LampFlashState,
+  LightState,
+  SeatbeltChimeState,
+  SeatbeltData,
+  TPMSData,
+} from "types";
+
+// FaultIndicator
+
+export const isFaultLamp = (faultLamp: FaultLampState | boolean) => {
+  if (typeof faultLamp === "boolean") {
+    return faultLamp;
+  } else {
+    return faultLamp === FaultLampState.ON;
+  }
+};
+
+export const isLampFlash = (lampFlash?: LampFlashState | boolean) => {
+  if (typeof lampFlash === "boolean") {
+    return lampFlash;
+  } else {
+    return lampFlash === LampFlashState.FLASH;
+  }
+};
 
 // Lights
 
@@ -15,10 +40,10 @@ export const getLightClass = (l: LightState, r: LightState, c: string) =>
 // Seatbelt
 
 const isSeatbeltBuckled = (s: SeatbeltData) =>
-  s.secondRowCenter === SeatbeltChimeState.NONE ||
-  s.secondRowLeft === SeatbeltChimeState.NONE ||
-  s.secondRowRight === SeatbeltChimeState.NONE ||
-  s.driver === SeatbeltChimeState.NONE ||
+  s.secondRowCenter === SeatbeltChimeState.NONE &&
+  s.secondRowLeft === SeatbeltChimeState.NONE &&
+  s.secondRowRight === SeatbeltChimeState.NONE &&
+  s.driver === SeatbeltChimeState.NONE &&
   s.passenger === SeatbeltChimeState.NONE;
 
 const isSeatbeltFault = (s: SeatbeltData) =>

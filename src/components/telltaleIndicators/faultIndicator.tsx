@@ -1,19 +1,20 @@
 import React from "react";
 import { FaultLampState, LampFlashState } from "types";
 import Indicator from "./indicator";
+import { isFaultLamp, isLampFlash } from "./utils";
 
 type FaultIndicatorProps = {
-  steady: FaultLampState;
-  flash?: LampFlashState;
+  steady: FaultLampState | boolean;
+  flash?: LampFlashState | boolean;
   class: string;
 };
 
 export const FaultIndicator = (props: FaultIndicatorProps) => {
   return (
     <Indicator
-      class={`${props.steady || props.flash ? props.class : ""}${
-        props.flash ? " fault" : ""
-      }`}
+      class={`${
+        isFaultLamp(props.steady) || isLampFlash(props.flash) ? props.class : ""
+      }${isLampFlash(props.flash) ? " fault" : ""}`}
     />
   );
 };

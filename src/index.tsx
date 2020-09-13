@@ -5,13 +5,7 @@ import { get, set } from "lodash";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import {
-  canData,
-  GearLeverPosition,
-  IPM3Screen,
-  IPM3Selected,
-  SwitchStatus,
-} from "types";
+import { canData, IPM3Screen, IPM3Selected, SwitchStatus } from "types";
 
 let exponentialBackoff = 1;
 let stalenessTimeout: NodeJS.Timeout | undefined = undefined;
@@ -106,15 +100,17 @@ const establishConnection = (firstTime: boolean) => {
     set(canData, dj.key, dj.val);
 
     if (
-      (dj.key === "switches.gearLeverPosition" &&
-        dj.val === GearLeverPosition.HALF_UP) ||
-      (dj.key === "switches.swcLeftTiltLeft" && dj.val === SwitchStatus.ON)
+      // (dj.key === "switches.gearLeverPosition" &&
+      //   dj.val === GearLeverPosition.HALF_UP) ||
+      dj.key === "switches.swcLeftTiltLeft" &&
+      dj.val === SwitchStatus.ON
     ) {
       setSelected(IPM3Selected.LEFT)();
     } else if (
-      (dj.key === "switches.gearLeverPosition" &&
-        dj.val === GearLeverPosition.HALF_DOWN) ||
-      (dj.key === "switches.swcLeftTiltRight" && dj.val === SwitchStatus.ON)
+      // (dj.key === "switches.gearLeverPosition" &&
+      //   dj.val === GearLeverPosition.HALF_DOWN) ||
+      dj.key === "switches.swcLeftTiltRight" &&
+      dj.val === SwitchStatus.ON
     ) {
       setSelected(IPM3Selected.RIGHT)();
     } else if (dj.key === "switches.swcRightScrollTicks") {
