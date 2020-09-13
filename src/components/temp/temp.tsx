@@ -1,10 +1,10 @@
 import React from "react";
-import { CANDataProps } from "types";
+import { CANDataProps, DistanceUnits } from "types";
 
 import "./temp.css";
 
 export const Temp = ({ canData }: CANDataProps) => {
-  const isMetric = canData.ui.speedUnits;
+  const isMetric = canData.ui.distanceUnits === DistanceUnits.KM;
   return (
     <div className={`temp ${isMetric ? "C" : "F"}`}>
       {Math.round(

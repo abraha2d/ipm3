@@ -15,7 +15,7 @@ import {
 import { SensorData } from "./sensors";
 import { GearLeverPosition, SwitchData, SwitchStatus } from "./switches";
 import { TPMSData } from "./tpms";
-import { SpeedUnits, SunStatus, UIData } from "./ui";
+import { DistanceUnits, SpeedUnits, SunStatus, UIData } from "./ui";
 
 export interface CANData {
   airbagLight: boolean;
@@ -161,6 +161,7 @@ export let canData: CANData = {
     RRtemp_C: 0,
   },
   ui: {
+    distanceUnits: DistanceUnits.MILES,
     parkBrakeFault: false,
     speedUnits: SpeedUnits.MPH,
     speed: 0,

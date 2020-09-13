@@ -1,5 +1,5 @@
 import React from "react";
-import { CANDataProps, Gear } from "types";
+import { CANDataProps, DistanceUnits, Gear } from "types";
 import { getTurnSignalClass } from "./utils";
 
 import "css/overlay.css";
@@ -19,7 +19,7 @@ export const Speedometer = ({ canData }: CANDataProps) => {
         </span>
         {canData.di.gear === Gear.SNA || (
           <span className="units">
-            {canData.ui.speedUnits ? "KM/H" : "MPH"}
+            {canData.ui.distanceUnits === DistanceUnits.KM ? "KM/H" : "MPH"}
           </span>
         )}
       </div>

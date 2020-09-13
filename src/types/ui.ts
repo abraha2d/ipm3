@@ -1,3 +1,8 @@
+export enum DistanceUnits {
+  KM,
+  MILES,
+}
+
 export enum SpeedUnits {
   MPH,
   KPH,
@@ -16,6 +21,9 @@ export interface UIData {
   // ID257UIspeed
   speedUnits: SpeedUnits;
   speed: number;
+
+  // ID293UI_chassisControl
+  distanceUnits: DistanceUnits;
 
   // ID2D3UI_solarData
   isSunUp: SunStatus;
