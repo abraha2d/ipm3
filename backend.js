@@ -78,6 +78,9 @@ const messages = {
     RearPowerLimit266: "power.rearLimit_kW",
     RearPower266: "power.rear_kW",
   },
+  ID293UI_chassisControl: {
+    UI_distanceUnits: "ui.distanceUnits",
+  },
   ID2B6DI_chassisControlStatus: {
     DI_tcTelltaleFlash: "di.tcTelltaleFlash",
     DI_tcTelltaleOn: "di.tcTelltaleOn",
