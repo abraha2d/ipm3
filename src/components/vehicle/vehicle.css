@@ -136,6 +136,7 @@
   content: "";
   display: block;
   height: 81px;
+  background: gray;
 }
 .vehicle > .headlights.left::after {
   background: linear-gradient(to right, transparent 35%, gray 65%);

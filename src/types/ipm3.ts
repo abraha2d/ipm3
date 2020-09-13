@@ -9,7 +9,7 @@ export enum IPM3Screen {
   ENERGY,
   TRIPS,
   CAR_STATUS,
-  MAP_OR_CALL,
+  NAV_OR_PHONE,
 }
 
 export interface IPM3Data {

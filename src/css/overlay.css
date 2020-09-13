@@ -47,10 +47,46 @@
   right: 15px;
 }
 
-.overlay.screen.selected {
-  background: #80808080;
+.overlay.screen > div {
+  position: absolute;
+  transition: 200ms;
+  transition-timing-function: ease-out;
 }
 
-.light .overlay.screen.selected {
-  background: #80808080;
+.overlay.screen > .up,
+.overlay.screen > .down {
+  opacity: 0;
+}
+
+.overlay.screen > .up {
+  transform: translate(0, -125px);
+}
+
+.overlay.screen > .down {
+  transform: translate(0, 125px);
+}
+
+.overlay.screen .title {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 500ms;
+}
+
+.light .overlay.screen .title {
+  background: WhiteSmoke;
+}
+
+.overlay.screen.selected .title {
+  opacity: 1;
+}
+
+.overlay.screen .title > span {
+  transform: translate(0, -25px);
 }

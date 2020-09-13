@@ -39,13 +39,13 @@ const scrollSelected = (numTicks: number) => {
     canData.ipm3.leftScreen += numTicks;
     canData.ipm3.leftScreen = Math.min(
       Math.max(canData.ipm3.leftScreen, 0),
-      IPM3Screen.MAP_OR_CALL
+      IPM3Screen.NAV_OR_PHONE
     );
   } else if (canData.ipm3.selected === IPM3Selected.RIGHT) {
     canData.ipm3.rightScreen += numTicks;
     canData.ipm3.rightScreen = Math.min(
       Math.max(canData.ipm3.rightScreen, 0),
-      IPM3Screen.MAP_OR_CALL
+      IPM3Screen.NAV_OR_PHONE
     );
   }
   renderApp();

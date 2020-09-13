@@ -1,3 +1,9 @@
+import { CANData } from "./canData";
+
+export type CANDataProps = {
+  canData: CANData;
+};
+
 export * from "./canData";
 
 export * from "./cp";

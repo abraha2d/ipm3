@@ -1,15 +1,3 @@
-@import "gear-indicator.css";
-@import "overlay.css";
-@import "range.css";
-@import "speed.css";
-@import "telltale.css";
-@import "temp.css";
-@import "time.css";
-@import "turn-signal.css";
-@import "vehicle.css";
-
-@import "screens/energy.css";
-
 #root {
   position: absolute;
   top: 0;
