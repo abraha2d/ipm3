@@ -23,7 +23,9 @@
     "ws": "^7.3.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
+    "start:dev:ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,6 +53,7 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^6.11.0",
+    "nodemon": "^2.0.4",
     "prettier": "2.1.1"
   }
 }

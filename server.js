@@ -172,7 +172,7 @@ const messages = {
 const msgCache = {};
 
 const app = express();
-app.use(express.static("../ipm3/build"));
+app.use(express.static("build"));
 
 const server = http.createServer(app);
 const wss = new ws.Server({ server });
@@ -201,7 +201,7 @@ const onChangeListener = (key) => (s) => {
 };
 
 const network = socketcan.parseNetworkDescription("Model3CAN.kcd");
-const channel = socketcan.createRawChannel("can0");
+const channel = socketcan.createRawChannel(process.env.CAN || "can0");
 const db = new socketcan.DatabaseService(channel, network.buses["Model3CAN"]);
 
 Object.entries(messages).forEach(([message, signals]) => {
@@ -214,6 +214,6 @@ channel.start();
 
 server.listen(process.env.PORT || 3001, () => {
   console.log(
-    `Example app listening at http://localhost:${server.address().port}`
+    `IPM3 listening at http://localhost:${server.address().port}`
   );
 });

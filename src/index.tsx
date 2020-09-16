@@ -77,7 +77,7 @@ const establishConnection = (firstTime: boolean) => {
       document.getElementById("root")
     );
 
-  const webSocket = new WebSocket("ws://localhost:3001");
+  const webSocket = new WebSocket(`ws://${window.location.hostname}:3001`);
 
   webSocket.onopen = () => {
     if (firstTime)
