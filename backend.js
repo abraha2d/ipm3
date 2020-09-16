@@ -3,10 +3,6 @@ const http = require("http");
 const socketcan = require("socketcan");
 const ws = require("ws");
 
-const network = socketcan.parseNetworkDescription("Model3CAN.kcd");
-const channel = socketcan.createRawChannel("can0");
-const db = new socketcan.DatabaseService(channel, network.buses["Model3CAN"]);
-
 const messagesChassis = {
   ID145ESP_status: {
     ESP_absFaultLamp: "esp.absFaultLamp",
@@ -176,10 +172,7 @@ const messages = {
 const msgCache = {};
 
 const app = express();
-
-app.get("/", (req, res) => {
-  res.send("IPM3: An instrument panel for the Tesla Model 3.");
-});
+app.use(express.static("../ipm3/build"));
 
 const server = http.createServer(app);
 const wss = new ws.Server({ server });
@@ -206,6 +199,10 @@ const onChangeListener = (key) => (s) => {
   msgCache[key] = s.value;
   broadcastMessage(key, s.value);
 };
+
+const network = socketcan.parseNetworkDescription("Model3CAN.kcd");
+const channel = socketcan.createRawChannel("can0");
+const db = new socketcan.DatabaseService(channel, network.buses["Model3CAN"]);
 
 Object.entries(messages).forEach(([message, signals]) => {
   Object.entries(signals).forEach(([signal, key]) => {
