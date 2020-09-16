@@ -16,7 +16,7 @@ export const VehiclePark = ({ canData }: CANDataProps) => {
       <div className={`left-rear ${getOpen(canData.latches.rearLeft)}`} />
       <div className={`right-front ${getOpen(canData.latches.frontRight)}`} />
       <div className={`right-rear ${getOpen(canData.latches.rearRight)}`} />
-      <div className={`trunk ${getOpen(canData.latches.frunk)}`} />
+      <div className={`trunk ${getOpen(canData.latches.trunk)}`} />
     </div>
   );
 };
