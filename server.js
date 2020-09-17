@@ -1,3 +1,4 @@
+const child_process = require("child_process");
 const express = require("express");
 const http = require("http");
 const socketcan = require("socketcan");
@@ -181,6 +182,7 @@ wss.on("connection", (client) => {
   Object.entries(msgCache).forEach(([key, val]) => {
     client.send(JSON.stringify({ key, val }));
   });
+  child_process.execSync("chvt 2");
 });
 
 const broadcastMessage = (key, val) => {
